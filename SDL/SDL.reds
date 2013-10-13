@@ -429,6 +429,9 @@ sdl: context [
 			count				[integer!]
 			rectangles			[rectangle!]
 		]
+		delay: "SDL_Delay" [								"Delays for a time period."
+			ms					[integer!]
+		]
 
 
 		; Rectangles
@@ -618,7 +621,6 @@ sdl: context [
 	][
 		zero? _fill surface rectangle color
 	]
-
 
 	plot: function ["Draw a pixel."
 		surface				[surface!]
