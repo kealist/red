@@ -1,5 +1,5 @@
 Red/System [
-	Title:		"Lazyfoo SDL Tutorial Lesson 1"
+	Title:		"SDL Tutorial 1"
 	Author:		"Joshua Shireman"
 	Rights:		""
 	License: {
