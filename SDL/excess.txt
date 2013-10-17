@@ -1,0 +1,21 @@
+	apply-surface: function [
+		x 					[integer!]
+		y					[integer!]
+		source				[surface!]
+		destination			[surface!]
+		return:				[logic!]
+		/local offset [rectangle!]
+	][
+		offset: as rectangle! 0
+		offset/x-y: x + y
+		zero? _blit-surface source NULL destination offset
+	]
+	
+	_blit-surface: "SDL_BlitSurface" [					"Perform a fast surface copy to a destination surface."
+			source				[surface!]
+			source-rectangle	[rectangle!]
+			target				[surface!]
+			target-rectangle	[rectangle!]
+			return:				[integer!]
+		]
+

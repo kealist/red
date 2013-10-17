@@ -59,30 +59,34 @@ with sdl [
 		return optimized-image
 	]
 	
-	apply-image: function ["apply an image at x y coordinates"
+	blit-image: function ["apply an image at x y coordinates"
 		x	[integer!]
 		y	[integer!]
 		source				[surface!]
 		target				[surface!]
 		return:				[logic!]
-		/local target-coords
+		/local rectangle
 	] [
-		target-coords: as rectangle! allocate size? rectangle!
-		target-coords/x-y: (x and FFFFh) or (y << 16)
-		blit source null target target-coords
+		rectangle: as rectangle! allocate size? rectangle!
+		rectangle/x-y: x and FFFFh or (y << 16)
+		rectangle/width-height: source/height << 16 or source/width
+		blit source null target rectangle
+		
 	]
 	
 	either begin with-video [
 		screen: set-video-mode screen-width screen-height  screen-bpp  software-surface
 		set-window-caption "Hello World" null
 		image: load-image "sample.bmp"
-		apply-image 0 0 image screen
-		apply-image 150 200 image screen
-		apply-image 0 200 image screen
-		apply-image 150 0 image screen
-		flip screen
-		delay 2000
-		free-surface image
+		if as logic! image [
+			blit-image 0 0 image screen
+			blit-image 150 200 image screen
+			blit-image 0 200 image screen
+			blit-image 150 0 image screen
+			flip screen
+			delay 2000
+			free-surface image
+		]
 		end
 	][log-error]
 ]
