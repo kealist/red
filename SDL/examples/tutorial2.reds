@@ -71,7 +71,6 @@ with sdl [
 		rectangle/x-y: x and FFFFh or (y << 16)
 		rectangle/width-height: source/height << 16 or source/width
 		blit source null target rectangle
-		
 	]
 	
 	either begin with-video [
