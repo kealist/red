@@ -46,17 +46,23 @@ with sdl [
 	image:				as surface! 0
 	
 	
-	load-image: function [ "Convert an image"
+	load-image: function [ "Load and convert an image to the current display format"
 		filename [c-string!]
 		return: [surface!]
-		/local loaded-image optimized image
+		/local loaded-image optimized image file
 	] [
 		loaded-image:		as surface! 0
 		optimized-image: 	as surface! 0
-		loaded-image: load-bmp open filename "rb" yes
-		optimized-image: display-format loaded-image
-		free-surface loaded-image
-		return optimized-image
+		file: open filename "rb"
+		either as logic! file [
+			loaded-image: load-bmp file yes
+			optimized-image: to-display-format loaded-image
+			free-surface loaded-image
+			return optimized-image
+		] [
+			log-error
+			return null
+		]
 	]
 	
 	blit-image: function ["apply an image at x y coordinates"
@@ -76,16 +82,14 @@ with sdl [
 	either begin with-video [
 		screen: set-video-mode screen-width screen-height  screen-bpp  software-surface
 		set-window-caption "Hello World" null
-		image: load-image "sample.bmp"
-		if as logic! image [
-			blit-image 0 0 image screen
-			blit-image 150 200 image screen
-			blit-image 0 200 image screen
-			blit-image 150 0 image screen
-			flip screen
-			delay 2000
-			free-surface image
-		]
+		image: load-image "sample2.bmp"
+		blit-image 0 0 image screen
+		blit-image 150 200 image screen
+		blit-image 0 200 image screen
+		blit-image 150 0 image screen
+		flip screen
+		wait 2000
+		free-surface image
 		end
-	][log-error]
+	] [log-error]
 ]

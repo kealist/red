@@ -429,10 +429,10 @@ sdl: context [
 			count				[integer!]
 			rectangles			[rectangle!]
 		]
-		delay: "SDL_Delay" [								"Delays for a time period."
+		wait: "SDL_Delay" [								"Delays for a time period."
 			ms					[integer!]
 		]
-		display-format: "SDL_DisplayFormat" [				"Convert a surface to the display format."
+		to-display-format: "SDL_DisplayFormat" [				"Convert a surface to the display format."
 			surface				[surface!]
 			return:				[surface!]
 		]
