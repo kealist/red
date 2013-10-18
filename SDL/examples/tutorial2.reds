@@ -82,7 +82,7 @@ with sdl [
 	either begin with-video [
 		screen: set-video-mode screen-width screen-height  screen-bpp  software-surface
 		set-window-caption "Hello World" null
-		image: load-image "sample2.bmp"
+		image: load-image "sample.bmp"
 		blit-image 0 0 image screen
 		blit-image 150 200 image screen
 		blit-image 0 200 image screen
