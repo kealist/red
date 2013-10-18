@@ -60,7 +60,6 @@ with sdl [
 			free-surface loaded-image
 			return optimized-image
 		] [
-			log-error
 			return null
 		]
 	]
@@ -83,13 +82,15 @@ with sdl [
 		screen: set-video-mode screen-width screen-height  screen-bpp  software-surface
 		set-window-caption "Hello World" null
 		image: load-image "sample.bmp"
-		blit-image 0 0 image screen
-		blit-image 150 200 image screen
-		blit-image 0 200 image screen
-		blit-image 150 0 image screen
-		flip screen
-		wait 2000
-		free-surface image
-		end
+		either (null? image) [log-error end] [
+			blit-image 0 0 image screen
+			blit-image 150 200 image screen
+			blit-image 0 200 image screen
+			blit-image 150 0 image screen
+			flip screen
+			wait 2000
+			free-surface image
+			end
+		]
 	] [log-error]
 ]

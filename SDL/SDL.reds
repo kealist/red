@@ -364,7 +364,6 @@ sdl: context [
 			icon-caption		[string-reference!]			"UTF-8"
 		]
 
-
 		; Surfaces
 
 		set-video-mode: "SDL_SetVideoMode" [				"Return configured screen surface."
