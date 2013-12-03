@@ -1,4 +1,7 @@
-Red []
+Red [
+	Author: "Joshua Shireman"
+	Title: "To Soundex Function"
+]
 
 letter: charset [#"a" - #"z" #"A" - #"Z"]
 vowel: charset "aeiouyhw"
