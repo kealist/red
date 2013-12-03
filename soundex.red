@@ -1,6 +1,7 @@
 Red [
 	Author: "Joshua Shireman"
-	Title: "To Soundex Function"
+	Purpose: {This function outputs a string that is the Soundex value of a particular word.}
+	Title: "to-soundex function"
 ]
 
 letter: charset [#"a" - #"z" #"A" - #"Z"]
