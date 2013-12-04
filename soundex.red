@@ -59,14 +59,12 @@ consonant: [
 append-if: func [
 	int [integer!]
 ] [
-	either not all [
+	if not all [
 		not preceding-vowel?
 		preceding-consonant = int
 	] [
 		preceding-consonant: int
 		append s int
-	] [
-		preceding-consonant: int
 	]
 ]
 
