@@ -1,7 +1,8 @@
 Red [
 	Author: "Joshua Shireman"
-	Purpose: {This function outputs a string that is the Soundex value of a particular word.}
+	Purpose: {This function outputs a string that is the American Soundex value of a particular word.}
 	Title: "to-soundex function"
+	Documentation: {Given a string as a parameter, the function will return a string of length four, which is the soundex code for the particular name, ie to-soundex "Smith" will return "S530"}
 ]
 
 letter: charset [#"a" - #"z" #"A" - #"Z"]
@@ -73,3 +74,11 @@ ev [Shireman: (to-soundex "Shireman")]
 ev [Aaron: (to-soundex "Aaron")]
 ev [Smith: (to-soundex "Smith")]
 ev [Johnson: (to-soundex "Johnson")]
+ev [Robert: (to-soundex "Robert")]
+ev [Rupert: (to-soundex "Rupert")]
+ev [Rubin: (to-soundex "Rubin")]
+ev [Ashcraft: (to-soundex "Ashcraft")]
+ev [Ashcroft: (to-soundex "Ashcroft")] 
+ev [Tymczak: (to-soundex "Tymczak") should be "T522"]
+ev [Pfister: (to-soundex "Pfister") should be "P236"]
+ev [(to-soundex "")]
