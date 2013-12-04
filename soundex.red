@@ -1,8 +1,23 @@
 Red [
-	Author: "Joshua Shireman"
-	Purpose: {This function outputs a string that is the American Soundex value of a particular word.}
-	Title: "to-soundex function"
-	Documentation: {Given a string as a parameter, the function will return a string of length four, which is the soundex code for the particular name, ie to-soundex "Smith" will return "S530"}
+	author: "Joshua Shireman"
+	purpose: {This function outputs a string that is the American Soundex value of a particular word.}
+	title: "to-soundex function"
+	web: {http://www.github.com/kealist}
+	documentation: {Given a string as a parameter, the function will return a string of length four, which is the soundex code for the particular name, ie to-soundex "Smith" will return "S530"}
+	license-type: "Apache License v2.0"
+	license: {Copyright 2013 Joshua Shireman
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+		http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.}
 ]
 
 letter: charset [#"a" - #"z" #"A" - #"Z"]
