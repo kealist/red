@@ -15,29 +15,42 @@ six: charset "rR"
 preceding-vowel?: true
 preceding-consonant: none
 s: copy ""
+c: none
 
 soundex: [
-	copy initial letter (append s initial)
-	some [vowel (preceding-vowel?: true) | consonant (preceding-vowel?: false)]	
+	copy initial letter (
+		parse initial consonant
+		preceding-consonant: c
+		append s initial
+	)
+	some [
+		vowel (preceding-vowel?: true) | 
+		consonant (
+			append-if c
+			preceding-vowel?: false
+		)
+	]	
 ]
 consonant: [
-	one (append-if 1) |
-	two (append-if 2) | 
-	three (append-if 3) | 
-	four (append-if 4) | 
-	five (append-if 5) | 
-	six (append-if 6)
+	one (c: 1) |
+	two (c: 2) | 
+	three (c: 3) | 
+	four (c: 4) | 
+	five (c: 5) | 
+	six (c: 6)
 ]
 
 append-if: func [
 	int [integer!]
 ] [
-	if not all [
+	either not all [
 		not preceding-vowel?
 		preceding-consonant = int
 	] [
 		preceding-consonant: int
 		append s int
+	] [
+		preceding-consonant: int
 	]
 ]
 
@@ -57,5 +70,6 @@ to-soundex: func [
 ev: func [block] [print mold compose/deep block]
 
 ev [Shireman: (to-soundex "Shireman")]
+ev [Aaron: (to-soundex "Aaron")]
 ev [Smith: (to-soundex "Smith")]
 ev [Johnson: (to-soundex "Johnson")]
