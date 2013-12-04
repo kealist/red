@@ -72,12 +72,15 @@ to-soundex: func [
 	str [string!]
 ] [
 	s: copy ""
-	parse str soundex
-	either ((length? s) > 4) [
-		return copy/part at s 0 4
+	either parse str soundex [
+		either ((length? s) > 4) [
+			return copy/part at s 0 4
+		][
+			while [(length? s) < 4] [append s 0]
+			return s
+		]
 	][
-		while [(length? s) < 4] [append s 0]
-		return s
+		return none
 	]
 ]
 
