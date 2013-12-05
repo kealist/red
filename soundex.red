@@ -28,50 +28,49 @@ three: charset "dtDT"
 four: charset "lL"
 five: charset "mnMN"
 six: charset "rR"
-preceding-vowel?: true
-preceding-consonant: none
-s: copy ""
-c: none
-
-soundex: [
-	copy initial letter (
-		parse initial consonant
-		preceding-consonant: c
-		append s initial
-	)
-	some [
-		vowel (preceding-vowel?: true) | 
-		consonant (
-			append-if c
-			preceding-vowel?: false
-		)
-	]	
-]
-consonant: [
-	one (c: 1) |
-	two (c: 2) | 
-	three (c: 3) | 
-	four (c: 4) | 
-	five (c: 5) | 
-	six (c: 6)
-]
-
-append-if: func [
-	int [integer!]
-] [
-	if not all [
-		not preceding-vowel?
-		preceding-consonant = int
-	] [
-		preceding-consonant: int
-		append s int
-	]
-]
 
 to-soundex: func [
 	str [string!]
+	/local preceding-vowel? preceding-consonant s c soundex consonant
 ] [
+	preceding-vowel?: true
+	preceding-consonant: none
 	s: copy ""
+	c: none
+	soundex: [
+		copy initial letter (
+			parse initial consonant
+			preceding-consonant: c
+			append s initial
+		)
+		some [
+			vowel (preceding-vowel?: true) | 
+			consonant (
+				append-if c
+				preceding-vowel?: false
+			)
+		]	
+	]
+	consonant: [
+		one (c: 1) |
+		two (c: 2) | 
+		three (c: 3) | 
+		four (c: 4) | 
+		five (c: 5) | 
+		six (c: 6)
+	]
+	s: copy ""
+	append-if: func [
+		int [integer!]
+	] [
+		if not all [
+			not preceding-vowel?
+			preceding-consonant = int
+		][
+			preceding-consonant: int
+			append s int
+		]
+	]
 	either parse str soundex [
 		either ((length? s) > 4) [
 			return copy/part at s 0 4
