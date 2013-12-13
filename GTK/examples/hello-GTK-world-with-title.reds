@@ -25,6 +25,5 @@ with gtk [
 	view [
 		"Hello World"
 		label "Hello, Red/System GTK+ world!"
-		button "click me!"
 	]
 ]
