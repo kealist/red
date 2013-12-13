@@ -644,7 +644,7 @@ date!: alias struct! [
 		return:			[c-string!]
 	]
 
-	call-wait: "system" [					"Execute external system command, await its return."
+	call: "system" [						"Execute external system command."
 		command			[c-string!]			"NULL to check for command processor"
 		return:			[integer!]
 	]

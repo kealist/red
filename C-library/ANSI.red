@@ -54,11 +54,11 @@ input: routine ["Read a line from standard input."
 ][
 	line: system/words/input
 
-	either as-logic line [
-		SET_RETURN ((string/load line  1 + length? line))
+	either none? line [
+		RETURN_NONE  ; FIXME: report error
+	][
+		SET_RETURN ((string/load line  (length? line) + 1))
 ;		free-any line
-	][	; FIXME: report error
-		RETURN_NONE
 	]
 ]
 ask: function ["Prompt for input."
@@ -99,10 +99,14 @@ now-with: routine ["Current time."
 		][
 			text: make-c-string 27
 
-			either as-logic text [
+			either none? text [
+				RETURN_NONE  ; FIXME: report error
+			][
 				date: to-date :time
 
-				either as-logic date [
+				either none? date [
+					RETURN_NONE
+				][
 					minutes: date/hour * 60 + date/minute
 
 					date: to-local-date :time
@@ -138,21 +142,21 @@ now-with: routine ["Current time."
 						]
 						zone? [
 							either 5 <= format-any [text "%c%i:%02i" sign  zone / 60  zone // 60] [
-								SET_RETURN ((string/load text  1 + length? text))
+								SET_RETURN ((string/load text  (length? text) + 1))
 							][	; FIXME: report error
 								RETURN_NONE
 							]
 						]
 						date? [
 							either format-date text 27 "%d-%b-%Y" date [
-								SET_RETURN ((string/load text  1 + length? text))
+								SET_RETURN ((string/load text  (length? text) + 1))
 							][	; FIXME: report error
 								RETURN_NONE
 							]
 						]
 						time? [
 							either format-date text 27 "%H:%M:%S" date [
-								SET_RETURN ((string/load text  1 + length? text))
+								SET_RETURN ((string/load text  (length? text) + 1))
 							][	; FIXME: report error
 								RETURN_NONE
 							]
@@ -160,7 +164,7 @@ now-with: routine ["Current time."
 						yes [
 							either format-date text 27 "%d-%b-%Y/%H:%M:%S" date [
 								either any [utc?  25 <= format-any [text "%s%c%i:%02i" text sign  zone / 60  zone // 60]] [
-									SET_RETURN ((string/load text  1 + length? text))
+									SET_RETURN ((string/load text  (length? text) + 1))
 								][	; FIXME: report error
 									RETURN_NONE
 								]
@@ -169,12 +173,8 @@ now-with: routine ["Current time."
 							]
 						]
 					]
-				][
-					RETURN_NONE
 				]
 ;				free-any text
-			][	; FIXME: report error
-				RETURN_NONE
 			]
 		]
 	]
@@ -207,12 +207,12 @@ subtract-time: routine ["time-1 - time-2"
 
 	string: make-c-string 38  ; Max 64 bits; FIXME?: enough?
 
-	either as-logic string [
+	either none? string [
+		RETURN_NONE
+	][
 		format-any [string "%.0f"  system/words/subtract-time time-1 time-2]  ; FIXME?: error possible?
 		integer/box system/words/to-integer string
 		free-any string
-	][
-		RETURN_NONE
 	]
 ]
 
@@ -262,21 +262,21 @@ get-env: routine ["Get system environment variable."
 	value: system/words/get-env text
 	free-any text
 
-	either as-logic value [
-		SET_RETURN ((string/load value  1 + length? value))
-;		free-any value  ; ?
-	][
+	either none? value [
 		RETURN_NONE
+	][
+		SET_RETURN ((string/load value  (length? value) + 1))
+;		free-any value  ; ?
 	]
 ]
 
-call-wait: routine ["Execute external system command, await its return."
+call-system: routine ["Execute external system command."
 	command			[string!]
 	return:			[integer!]
 	/local text status
 ][
 	text: to-UTF8 command
-	status: system/words/call-wait text
+	status: call text
 	free-any text
 	status
 ]
@@ -285,5 +285,6 @@ call: function ["Execute external system command."
 	/wait			"Await command's return."
 	return:			[integer!]
 ][
-	call-wait command
+	; TODO: no-wait on Windows
+	call-system either any [wait Windows?] [command] [append copy command  " &"]
 ]
