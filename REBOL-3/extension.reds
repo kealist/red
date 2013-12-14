@@ -1,5 +1,6 @@
 Red/System [
 	Title:		"REBOL 3 Extension"
+	Type:		'library
 	Author:		"Kaj de Vos"
 	Rights:		"Copyright (c) 2012,2013 Kaj de Vos. All rights reserved."
 	License: {

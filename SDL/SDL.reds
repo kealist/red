@@ -364,6 +364,7 @@ sdl: context [
 			icon-caption		[string-reference!]			"UTF-8"
 		]
 
+
 		; Surfaces
 
 		set-video-mode: "SDL_SetVideoMode" [				"Return configured screen surface."
@@ -428,13 +429,6 @@ sdl: context [
 			count				[integer!]
 			rectangles			[rectangle!]
 		]
-		wait: "SDL_Delay" [								"Delays for a time period."
-			ms					[integer!]
-		]
-		to-display-format: "SDL_DisplayFormat" [				"Convert a surface to the display format."
-			surface				[surface!]
-			return:				[surface!]
-		]
 
 
 		; Rectangles
@@ -448,7 +442,7 @@ sdl: context [
 			surface				[surface!]
 			rectangle			[rectangle!]
 		]
-		
+
 		_blit: "SDL_UpperBlit" [							"Blit source rectangle to target surface."
 			source				[surface!]
 			source-rectangle	[rectangle!]
@@ -624,7 +618,6 @@ sdl: context [
 	][
 		zero? _fill surface rectangle color
 	]
-
 
 
 	plot: function ["Draw a pixel."

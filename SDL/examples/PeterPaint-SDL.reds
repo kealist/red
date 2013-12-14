@@ -31,15 +31,15 @@ Red/System [
 with sdl [
 
 	current: version
-	print ["SDL version: "
+	print-line ["SDL version: "
 		as-integer current/major  #"."
 		as-integer current/minor  #"."
-		as-integer current/patch  newline
+		as-integer current/patch
 	]
 
 
 	log-error: does [  ; Log current SDL error.
-		print-wide ["Error:" form-error newline]
+		print-line ["Error: " form-error]
 	]
 
 
@@ -68,7 +68,7 @@ with sdl [
 			; If a program parameter is given, load it as a BitMaP file
 
 			if as-logic argument [
-				file: open argument "rb"
+				file: open-read-binary argument
 				end-argument argument
 
 				either as-logic file [

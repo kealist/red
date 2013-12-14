@@ -23,7 +23,7 @@ Red/System [
 with sdl [
 
 	log-error: does [  ; Log current SDL error.
-		print-wide ["Error:" form-error newline]
+		print-line ["Error: " form-error]
 	]
 
 
@@ -65,7 +65,7 @@ with sdl [
 			either open-audio wanted actual [
 				; Load the audio file
 
-				file: open argument "rb"
+				file: open-read-binary argument
 
 				either as-logic file [
 					either as-logic load-wav file yes sound data :size [
