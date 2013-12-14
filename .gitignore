@@ -22,6 +22,8 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 
+
+
 # CDT-specific
 .cproject
 
@@ -213,3 +215,6 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+*.exe
+*.fossil
