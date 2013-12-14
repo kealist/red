@@ -36,19 +36,71 @@ Red [
 #include %../common/common.red
 
 
-; Type conversions
+; Parsing
 
-to-integer: routine ["Parse string to integer."
-	text			[string!]
-	return:			[integer!]
+to-integer: routine ["Return integer parsed from string."
+	string			[string!]
+;	return:			[integer! none!]
+	/local text result
 ][
-	system/words/to-integer as-c-string string/rs-head text
+	text: to-UTF8 string
+
+	either none? text [
+		RETURN_NONE
+	][
+		result: system/words/to-integer text
+		free-any text
+		integer/box result
+	]
+]
+load-hex: routine ["Return integer parsed from hexadecimal string."
+	string			[string!]
+;	return:			[integer! none!]
+	/local text result ok?
+][
+	text: to-UTF8 string
+	result: 0
+	ok?: parse-hex text :result
+	free-any text
+
+	either ok? [
+		integer/box result
+	][
+		RETURN_NONE
+	]
+]
+
+
+; Formatting
+
+to-hex-size: routine ["Return integer formatted as hexadecimal string."
+	number			[integer!]
+	length			[integer!]  "Number of digits"
+;	return:			[string! none!]
+	/local			text
+][
+	text: form-hex number length
+
+	either none? text [
+		RETURN_NONE
+	][
+		SET_RETURN ((string/load text  (length? text) + 1))
+;		free-any text
+	]
+]
+to-hex: func ["Return integer formatted as hexadecimal string."
+	number			[integer!]
+	/size
+		length		[integer!]  "Number of digits"
+	return:			[string! none!]
+][
+	to-hex-size number  any [length 8]
 ]
 
 
 ; Input/output
 
-input: routine ["Read a line from standard input."
+input: routine ["Return a line read from standard input."
 ;	return:			[string! none!]
 	/local			line
 ][
@@ -61,7 +113,7 @@ input: routine ["Read a line from standard input."
 ;		free-any line
 	]
 ]
-ask: function ["Prompt for input."
+ask: function ["Prompt for input, then return a line read from standard input."
 	prompt			[string!]
 	return:			[string! none!]
 ][
@@ -72,7 +124,7 @@ ask: function ["Prompt for input."
 
 ; Dates and time
 
-now-with: routine ["Current time."
+now-with: routine ["Return current time."
 	precise?		[logic!]
 	utc?			[logic!]
 	zone?			[logic!]
@@ -179,7 +231,7 @@ now-with: routine ["Current time."
 		]
 	]
 ]
-now: function ["Current time."
+now: function ["Return current time."
 	/precise
 	/utc /zone
 	/date /time
@@ -197,7 +249,7 @@ now: function ["Current time."
 		weekday yearday
 ]
 
-subtract-time: routine ["time-1 - time-2"
+subtract-time: routine ["Return time difference in seconds: time-1 - time-2"
 	time-1			[integer!]  "time!"
 	time-2			[integer!]  "time!"
 ;	return:			[integer! none!]  "Seconds"
@@ -216,7 +268,7 @@ subtract-time: routine ["time-1 - time-2"
 	]
 ]
 
-get-process-seconds: routine ["CPU time used by process; wall-clock time on Windows!"
+get-process-seconds: routine ["Return CPU time used by process in seconds; wall-clock time on Windows!"
 ;	return:			[integer! none!]  ; TODO: return float!
 	/local			time
 ][
@@ -228,10 +280,10 @@ get-process-seconds: routine ["CPU time used by process; wall-clock time on Wind
 
 ; Random numbers
 
-random-with: routine [
+random-with: routine ["Return pseudo-random number from 1 thru NUMBER."
 	number			[integer!]
-	seed?			[logic!]
-	secure?			[logic!]
+	seed?			[logic!]  "Restart the sequence with new seed NUMBER (initially 1)?"
+	secure?			[logic!]  "Use time-based seed?"
 ;	return:			[integer! unset!]
 ][
 	either seed? [
@@ -241,10 +293,10 @@ random-with: routine [
 		integer/box random number
 	]
 ]
-random: function ["Pseudo-random number from 1 thru VALUE."
+random: function ["Return pseudo-random number from 1 thru NUMBER."
 	number			[integer!]
-	/seed			"Restart the sequence with new seed VALUE (initially 1)."
-	/secure			"Use time based seed."
+	/seed			"Restart the sequence with new seed NUMBER (initially 1)."
+	/secure			"Use time-based seed."
 	return:			[integer! unset!]
 ][
 	random-with number seed secure
@@ -253,7 +305,7 @@ random: function ["Pseudo-random number from 1 thru VALUE."
 
 ; System interfacing
 
-get-env: routine ["Get system environment variable."
+get-env: routine ["Return system environment variable."
 	name			[string!]
 ;	return:			[string! none!]
 	/local text value

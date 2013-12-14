@@ -227,7 +227,7 @@ date!: alias struct! [
 		byte			[integer!]			"byte! or EOF"
 		return:			[integer!]
 	]
-	is-whitespace: "isspace" [				"Test character for whitespace."
+	is-blank: "isspace" [					"Test character for whitespace."
 		byte			[integer!]			"byte! or EOF"
 		return:			[integer!]
 	]
@@ -743,11 +743,11 @@ punctuation?: function ["Test character for punctuation."
 ][
 	as-logic is-punctuation as-integer char
 ]
-whitespace?: function ["Test character for whitespace."
+blank?: function ["Test character for whitespace."
 	char			[byte!]
 	return:			[logic!]
 ][
-	as-logic is-whitespace as-integer char
+	as-logic is-blank as-integer char
 ]
 alphanumeric?: function ["Test character for alphanumeric."
 	char			[byte!]
@@ -843,13 +843,14 @@ form-signed: function ["Format signed integer as string."
 ]
 form-hex: function ["Format integer as hexadecimal string."
 	number			[integer!]
+	length			[integer!]  "Number of digits"
 	return:			[c-string!]
 	/local			result
 ][
 	result: make-c-string 9  ; Max 32 bits "FFFFFFFF"
 
 	if as-logic result [
-		format-any [result "%X" number]  ; FIXME?: error possible?
+		format-any [result "%0*X" length number]  ; FIXME?: error possible?
 	]
 	result
 ]

@@ -81,7 +81,7 @@ get-arguments: function ["Return program arguments, excluding program name."
 	all [
 		0 < count: get-args-count
 		(
-			list: copy []
+			list: make block! count
 
 			repeat i count [
 				append list  get-argument i
