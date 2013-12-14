@@ -24,7 +24,6 @@ Red/System [
 		OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	Needs: {
-		Red/System
 		%C-library/ANSI.reds
 		%cURL/cURL.reds
 	}

@@ -7,14 +7,12 @@ Red [
 		See https://github.com/dockimbel/Red/blob/master/BSL-License.txt
 	}
 	Needs: {
-		Red > 0.3.3
+		Red >= 0.4.0
 		%C-library/input-output.red | %common/input-output.red
 	}
 	Tabs:		4
 ]
 
-
-Windows?: system/platform = 'Windows
 
 #system-global [
 	#switch OS [

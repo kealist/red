@@ -10,13 +10,18 @@ Red [
 		%C-library/input-output.red
 		%console.red
 		%C-library/ANSI.red
+		%TNetStrings/TNetStrings.red
+		%JSON/JSON.red
 	}
 	Tabs:		4
 ]
 
 
+#include %../../C-library/input-output.red
+
 ; Extras
 #include %../../C-library/ANSI.red
+#include %../../TNetStrings/TNetStrings.red
+#include %../../JSON/JSON.red
 
-#include %../../C-library/input-output.red
 #include %console.red

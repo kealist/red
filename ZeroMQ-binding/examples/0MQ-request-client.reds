@@ -24,8 +24,8 @@ with zmq [
 	major: 0  minor: 0  patch: 0
 
 	version :major :minor :patch
-	print [
-		"0MQ version: " major #"." minor #"." patch newline
+	print-line [
+		"0MQ version: " major #"." minor #"." patch
 		newline
 	]
 
@@ -33,7 +33,7 @@ with zmq [
 	; Hello World client/server
 
 	log-error: does [  ; FIXME: should go to stderr
-		print [form-error system-error  newline]
+		print-line form-error system-error
 	]
 
 	client: function [
@@ -64,27 +64,30 @@ with zmq [
 					until [
 						count: count + 1
 
-						print ["Sending request " count newline]
+						print-line ["Sending request " count]
 						data: allocate size
 
-						either all [
-							as-logic data
-							send socket message
-								copy-part as-binary request  data size
-								size
-								zmq-none
-							receive socket message zmq-none
+						either none? data [
+							print-line "Error: out of memory!"
 						][
-							data: message-data-of message
-
-							either none? data [
-								log-error
+							either all [
+								send socket message
+									copy-part as-binary request  data size
+									size
+									zmq-none
+								receive socket message zmq-none
 							][
-								print ["Received reply " count ": "  as-c-string data  newline]
+								data: message-data-of message
+
+								either none? data [
+									print-line "Error: no message content available"
+								][
+									print-line ["Received reply " count ": " as-c-string data]
+								]
+								unless end-message message [log-error]
+							][
+								log-error
 							]
-							unless end-message message [log-error]
-						][
-							log-error
 						]
 
 						count = 10

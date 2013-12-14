@@ -24,7 +24,7 @@ Red [
 		OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	Needs: {
-		Red >= 0.3.3
+		Red >= 0.4.1
 		%C-library/ANSI.reds
 	}
 	Tabs:		4
@@ -32,6 +32,13 @@ Red [
 
 
 #system-global [#include %../C-library/ANSI.reds]
+
+
+; Buffer working space
+
+; WARN: not thread safe
+_string: ""
+_item: make block! 1
 
 
 ; Program arguments
@@ -76,7 +83,7 @@ get-arguments: function ["Return program arguments, excluding program name."
 		(
 			list: copy []
 
-			repeat i  count [
+			repeat i count [
 				append list  get-argument i
 			]
 			list
@@ -85,12 +92,66 @@ get-arguments: function ["Return program arguments, excluding program name."
 ]
 
 
+; PARSE rules
+
+blank:		charset " ^-^/^M"
+digit:		charset "0123456789"
+non-zero:	charset "123456789"
+
+
 ; Common functions
 
-Windows?: function ["Is the platform Windows?"
+Windows?: system/platform = 'Windows
+
+found?: func ["Test if value is not NONE."
+	value
 	return:			[logic!]
 ][
-	system/platform = 'Windows
+	not none? :value
+]
+
+any-word!: [word! lit-word! set-word! get-word! issue! refinement! datatype!]
+any-string!: [string! file!]
+any-block!: [block! paren! path! lit-path! set-path! get-path!]
+
+any-word?: func ["Test if value is a word of any type."
+	value
+	return:			[logic!]
+][
+	found? find any-word! type?/word :value
+]
+series?: func ["Test if value is a series of any type."
+	value
+	return:			[logic!]
+][
+	found? any-series? :value
+]
+any-string?: func ["Test if value is a string of any type."
+	value
+	return:			[logic!]
+][
+	found? find any-string! type?/word :value
+]
+any-block?: func ["Test if value is a block of any type."
+	value
+	return:			[logic!]
+][
+	found? find any-block! type?/word :value
+]
+
+single?: func ["Test if series has just one element."
+	series			[series!]
+	return:			[logic!]
+][
+	1 = length? series
+]
+
+offset?: func ["Return difference between two positions in a series."
+	series1			[series!]
+	series2			[series!]
+	return:			[integer!]
+][
+	subtract index? series2  index? series1
 ]
 
 

@@ -24,7 +24,7 @@ Red [
 		OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	Needs: {
-		Red > 0.3.3
+		Red >= 0.4.1
 		%common/input-output.reds
 		%common/common.red
 	}
@@ -72,11 +72,11 @@ write: routine ["Write file."
 
 load*: :load
 
-load: function ["Return a value or block of values by reading and evaluating a source."
+load: function ["Return a value or block of values by loading a source."
 	source			[string! file!]
-	/all			"Always return a block."
-	/into			"Insert result into existing block."
-		out			[block!]
+	/all							"Always return a block."
+	/into							"Insert result into existing block."
+		out			[block!]		"Result buffer"
 ][
 	if file? source [source: read source]
 
@@ -107,5 +107,5 @@ do: function ["Execute code from a source."
 ][
 	if file? source [source: read source]
 
-	first reduce/into result: [do* source]  clear _result  ; Force use of interpreter
+	first head reduce/into dummy: [do* source] clear _result  ; Force use of interpreter
 ]

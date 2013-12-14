@@ -12,15 +12,20 @@ Red [
 		%C-library/ANSI.red
 		%SQLite/SQLite.red
 		%GTK/GTK.red
+		%TNetStrings/TNetStrings.red
+		%JSON/JSON.red
 	}
 	Tabs:		4
 ]
 
 
+#include %../input-output.red
+
 ; Extras
 #include %../../C-library/ANSI.red
 #include %../../SQLite/SQLite.red
 #include %../../GTK/GTK.red
+#include %../../TNetStrings/TNetStrings.red
+#include %../../JSON/JSON.red
 
-#include %../input-output.red
 #include %console.red

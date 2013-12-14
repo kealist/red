@@ -211,22 +211,11 @@ get-logic: routine ["Return logic! socket option."
 	value: 0
 
 	with zmq [
-		either zmq/get-integer as socket! socket  name :value [
+		either zmq/get-logic as socket! socket  name :value [
 			logic/box as-logic value
 		][
 			RETURN_NONE
 		]
-	]
-]
-
-message-tail?: function ["Was last message the last part of a potentially multi-part message?"
-	socket			[integer!]  "socket!"
-;	return:			[logic! none!]
-][
-	either none? more?: get-logic socket receive-more? [
-		none
-	][
-		not more?
 	]
 ]
 
@@ -258,6 +247,13 @@ connect: routine ["Connect to a server socket."
 
 
 ; Message management
+
+;message?: function ["Is value a message?"
+;	value
+;	return:			[logic!]
+;][
+;	integer? value
+;]
 
 end-message: routine ["Clean up message."
 	message			[integer!]  "message!"
@@ -318,10 +314,26 @@ message-to-string: routine ["Free binary message, return content converted into 
 
 ; Message transfer
 
-empty-socket?: routine ["Are no incoming messages available? WARNING: only valid immediately after a receive/no-wait error."
-	return:			[logic!]
+;empty-socket?: routine ["Are no incoming messages available? WARNING: only valid immediately after a receive/no-wait error."
+;	return:			[logic!]
+;][
+;	zmq/empty-socket?
+;]
+
+message-tail?: routine ["Was last message the last part of a possibly multi-part message?"
+	socket			[integer!]  "socket!"
+;	return:			[logic! none!]
+	/local			tail?
 ][
-	zmq/empty-socket?
+	with zmq [
+		tail?: zmq/message-tail? as socket! socket
+
+		either negative? tail? [  ; Error
+			RETURN_NONE
+		][
+			logic/box as-logic tail?
+		]
+	]
 ]
 
 send-message: routine ["Send binary message."
@@ -354,7 +366,7 @@ receive-message: routine ["Receive and return a binary message."
 
 		either receive as socket! socket  message flags [
 			integer/box as-integer message
-		][
+		][	; Error
 			free-any message
 
 			either zmq/empty-socket? [
@@ -398,9 +410,9 @@ send-string: routine ["Send text message as UTF-8."
 	]
 ]
 receive-string: routine ["Receive and return a UTF-8 text message into a buffer."
-	socket			[integer!]  "socket!"
-	string			[string!]  "Receive buffer"
-	flags			[integer!]  "send-receive-flags!"
+	socket			[integer!]	"socket!"
+	string			[string!]	"Receive buffer"
+	flags			[integer!]	"send-receive-flags!"
 ;	return:			[string! logic! none!]
 	/local message text size series
 ][
@@ -410,9 +422,10 @@ receive-string: routine ["Receive and return a UTF-8 text message into a buffer.
 		either receive as socket! socket  message flags [
 			text: as-c-string message-data-of message
 
-			either none? text [
+			either none? text [  ; FIXME: there may be no error code
 				zmq/end-message message  ; FIXME: error code may get replaced
 				logic/box no
+;				RETURN_NONE
 			][
 				; Ensure tail marker
 				size: message-size-of message
@@ -434,7 +447,7 @@ receive-string: routine ["Receive and return a UTF-8 text message into a buffer.
 					logic/box no
 				]
 			]
-		][
+		][	; Error
 			either zmq/empty-socket? [
 				RETURN_NONE
 			][
@@ -453,15 +466,9 @@ send: function ["Send message."
 	flags: either part [send-more] [zmq-none]
 
 	switch/default type?/word message [
-		integer! [
-			send-message socket message flags
-		]
-		string! [
-			send-string socket message flags
-		]
-		none! [
-			send-empty socket flags
-		]
+		integer!	[send-message socket message flags]
+		string!		[send-string  socket message flags]
+		none!		[send-empty   socket		 flags]
 	][
 		no
 	]
@@ -472,13 +479,13 @@ receive: function ["Receive and return a message."
 	/string			"Receive a UTF-8 text message."
 	/into			"Receive a UTF-8 text message into a buffer."
 		out			[string!]  "Receive buffer"
-;	return:			[integer! string! logic! none!]  "message!"
+;	return:			[integer! string! logic! none!]  "message!; NO: error; NONE: no messages available"
 ][
 	flags: either no-wait [no-block] [zmq-none]
 
 	case [
-		into	receive-string socket out flags
-		string	receive-string socket  copy ""  flags
-		yes		receive-message socket flags
+		into	receive-string	socket	out		 flags
+		string	receive-string	socket	copy ""	 flags
+		yes		receive-message	socket			 flags
 	]
 ]

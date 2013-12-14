@@ -35,7 +35,7 @@ either zero? pool: make-pool 1 [
 			serve sink address
 			(
 				print "Awaiting start of batch..."
-				dummy: receive sink  ; Start of batch: discard
+				dummy: receive sink  ; Signal message: discard
 			)
 			end-message dummy
 		][

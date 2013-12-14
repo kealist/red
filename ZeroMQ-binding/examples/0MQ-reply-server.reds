@@ -24,8 +24,8 @@ with zmq [
 	major: 0  minor: 0  patch: 0
 
 	version :major :minor :patch
-	print [
-		"0MQ version: " major #"." minor #"." patch newline
+	print-line [
+		"0MQ version: " major #"." minor #"." patch
 		newline
 	]
 
@@ -33,7 +33,7 @@ with zmq [
 	; Hello World client/server
 
 	log-error: does [  ; FIXME: should go to stderr
-		print [form-error system-error  newline]
+		print-line form-error system-error
 	]
 
 	server: function [
@@ -63,25 +63,25 @@ with zmq [
 							data: message-data-of message
 
 							either none? data [
-								log-error
+								print-line "Error: no message content available"
 
 ;								unless end-message message [log-error]
 							][
-								print ["Received request: "  as-c-string data  newline]
+								print-line ["Received request: " as-c-string data]
 
 								either end-message message [
 									;wait 1
 
 									data: allocate size
 
-									unless all [
-										as-logic data
-										send socket message
+									either none? data [
+										print-line "Error: out of memory!"
+									][
+										unless send socket message
 											copy-part as-binary reply  data size
 											size
 											zmq-none
-									][
-										log-error
+										[log-error]
 									]
 								][
 									log-error

@@ -218,8 +218,7 @@ zmq: context [
 			return: 	[size!]
 		]
 
-		#either OS = 'Windows [
-;			For 0MQ >= 3:
+		#either OS = 'Windows [  ; 0MQ >= 3
 			_send-message: "zmq_msg_send" [		"Send message."
 				message		[message!]
 				socket		[socket!]
@@ -231,6 +230,11 @@ zmq: context [
 				socket		[socket!]
 				flags		[send-receive-flags!]
 				return: 	[status!]
+			]
+
+			more-message?: "zmq_msg_more" [		"Is message followed by more parts in a multi-part message?"
+				message		[message!]
+				return: 	[logic!]
 			]
 		][
 			_send-message: "zmq_send" [			"Send message."
@@ -331,18 +335,21 @@ zmq: context [
 			no
 		]
 	]
-
-	message-tail?: function ["Was last message the last part of a potentially multi-part message?"
+	get-logic: function ["Get logic! socket option."
 		socket		[socket!]
-		return:		[integer!]
-		/local		value
+		name		[socket-option!]
+		value		[pointer! [integer!]]
+		return:		[logic!]
+		/local		size
 	][
-		value: 0
-
-		either get-integer socket receive-more? :value [
-			value xor 1
+		#either OS = 'Windows [  ; 0MQ >= 3
+			size: 4
+			all [
+				get socket name  as-handle value  :size
+				size = 4
+			]
 		][
-			-1
+			get-integer socket name value
 		]
 	]
 
@@ -435,6 +442,25 @@ zmq: context [
 		return:		[logic!]
 	][
 		system-error = error-again
+	]
+
+	message-tail?: function ["Was last message the last part of a possibly multi-part message?"
+		socket		[socket!]
+;		message		[message!]
+		return:		[integer!]  "1: complete; 0: more parts; -1: error"
+		/local		value
+	][
+;		#either 0MQ >= 3 [
+;			as-integer not more-message? message
+;		][
+			value: 0
+
+			either get-logic socket receive-more? :value [
+				value xor 1
+			][
+				-1
+			]
+;		]
 	]
 
 	send-message: function ["Send message."
