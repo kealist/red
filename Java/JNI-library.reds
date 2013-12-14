@@ -1,5 +1,6 @@
 Red/System [
 	Title:		"Java Native Interface library"
+	Type:		'library
 	Author:		"Kaj de Vos"
 	Rights:		"Copyright (c) 2013 Kaj de Vos. All rights reserved."
 	License: {
@@ -24,7 +25,7 @@ Red/System [
 		OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	Needs: {
-		Red/System > 0.3.2
+		Red/System >= 0.4.1
 		%Java/JNI.reds
 	}
 	Tabs:		4
@@ -43,8 +44,6 @@ with JNI [
 		return:							[version!]
 		/local status vm java-double-reference java-reference java
 	][
-		#if format = 'ELF [***-dll-entry-point]  ; FIXME
-
 		if none? vm-reference [return 0]
 
 		vm: vm-reference/interface
