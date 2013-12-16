@@ -15,11 +15,11 @@
 #define GLP-NU			3
 #define GLP-NF			4
 #define GLP-NS			5
-#define GLP-SF-GM			0x01
-#define GLP-SF-EQ			0x10
-#define GLP-SF-2N			0x20
-#define GLP-SF-SKIP			0x40
-#define GLP-SF-AUTO			0x80
+#define GLP-SF-GM			1
+#define GLP-SF-EQ			16
+#define GLP-SF-2N			32
+#define GLP-SF-SKIP			64
+#define GLP-SF-AUTO			128
 #define GLP-SOL			1
 #define GLP-IPT			2
 #define GLP-MIP			3
@@ -40,10 +40,10 @@
 #define GLP-PRIMAL			1
 #define GLP-DUALP			2
 #define GLP-DUAL			3
-#define GLP-PT-STD			0x11
-#define GLP-PT-PSE			0x22
-#define GLP-RT-STD			0x11
-#define GLP-RT-HAR			0x22
+#define GLP-PT-STD			17
+#define GLP-PT-PSE			34
+#define GLP-RT-STD			17
+#define GLP-RT-HAR			34
 #define GLP-MSG-OFF			0
 #define GLP-MSG-ERR			1
 #define GLP-MSG-ON			2
@@ -70,33 +70,33 @@
 #define GLP-RF-CLQ			4
 #define GLP-ON			1
 #define GLP-OFF			0
-#define GLP-IROWGEN			0x01
-#define GLP-IBINGO			0x02
-#define GLP-IHEUR			0x03
-#define GLP-ICUTGEN			0x04
-#define GLP-IBRANCH			0x05
-#define GLP-ISELECT			0x06
-#define GLP-IPREPRO			0x07
+#define GLP-IROWGEN			1
+#define GLP-IBINGO			2
+#define GLP-IHEUR			3
+#define GLP-ICUTGEN			4
+#define GLP-IBRANCH			5
+#define GLP-ISELECT			6
+#define GLP-IPREPRO			7
 #define GLP-NO-BRNCH			0
 #define GLP-DN-BRNCH			1
 #define GLP-UP-BRNCH			2
-#define GLP-EBADB			0x01
-#define GLP-ESING			0x02
-#define GLP-ECOND			0x03
-#define GLP-EBOUND			0x04
-#define GLP-EFAIL			0x05
-#define GLP-EOBJLL			0x06
-#define GLP-EOBJUL			0x07
-#define GLP-EITLIM			0x08
-#define GLP-ETMLIM			0x09
-#define GLP-ENOPFS			0x0A
-#define GLP-ENODFS			0x0B
-#define GLP-EROOT			0x0C
-#define GLP-ESTOP			0x0D
-#define GLP-EMIPGAP			0x0E
-#define GLP-ENOFEAS			0x0F
-#define GLP-ENOCVG			0x10
-#define GLP-EINSTAB			0x11
+#define GLP-EBADB			1
+#define GLP-ESING			2
+#define GLP-ECOND			3
+#define GLP-EBOUND			4
+#define GLP-EFAIL			5
+#define GLP-EOBJLL			6
+#define GLP-EOBJUL			7
+#define GLP-EITLIM			8
+#define GLP-ETMLIM			9
+#define GLP-ENOPFS			10
+#define GLP-ENODFS			11
+#define GLP-EROOT			12
+#define GLP-ESTOP			13
+#define GLP-EMIPGAP			14
+#define GLP-ENOFEAS			15
+#define GLP-ENOCVG			16
+#define GLP-EINSTAB			17
 #define GLP-MPS-DECK			1
 #define GLP-MPS-FILE			2
 glp-set-pr: "glp_set_pr" [
@@ -109,10 +109,10 @@ glp-set-ob: "glp_set_ob" [
 	*lp	[glp_	return: 	[void!]
 ]
 glp-add-ro: "glp_add_ro" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-add-co: "glp_add_co" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-set-ro: "glp_set_ro" [
 	*lp	[glp_	return: 	[void!]
@@ -154,28 +154,28 @@ glp-delete: "glp_delete" [
 	*lp	[glp_	return: 	[void!]
 ]
 *glp-get-p: "*glp_get_p" [
-	*lp	[glp_	return: 	["char"]
+	*lp	[glp_	return: 	[char!]
 ]
 *glp-get-o: "*glp_get_o" [
-	*lp	[glp_	return: 	["char"]
+	*lp	[glp_	return: 	[char!]
 ]
 glp-get-ob: "glp_get_ob" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-nu: "glp_get_nu" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-nu: "glp_get_nu" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 *glp-get-r: "*glp_get_r" [
-	*lp	[glp_	return: 	["char"]
+	*lp	[glp_	return: 	[char!]
 ]
 *glp-get-c: "*glp_get_c" [
-	*lp	[glp_	return: 	["char"]
+	*lp	[glp_	return: 	[char!]
 ]
 glp-get-ro: "glp_get_ro" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-ro: "glp_get_ro" [
 	*lp	[glp_	return: 	[double!]
@@ -184,7 +184,7 @@ glp-get-ro: "glp_get_ro" [
 	*lp	[glp_	return: 	[double!]
 ]
 glp-get-co: "glp_get_co" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-co: "glp_get_co" [
 	*lp	[glp_	return: 	[double!]
@@ -196,22 +196,22 @@ glp-get-ob: "glp_get_ob" [
 	*lp	[glp_	return: 	[double!]
 ]
 glp-get-nu: "glp_get_nu" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-ma: "glp_get_ma" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-ma: "glp_get_ma" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-create: "glp_create" [
 	*lp	[glp_	return: 	[void!]
 ]
 glp-find-r: "glp_find_r" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-find-c: "glp_find_c" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-delete: "glp_delete" [
 	*lp	[glp_	return: 	[void!]
@@ -250,28 +250,28 @@ glp-cpx-ba: "glp_cpx_ba" [
 	*lp	[glp_	return: 	[void!]
 ]
 glp-simple: "glp_simple" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-exact: "glp_exact" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-init-s: "glp_init_s" [
 	*parm	["g	return: 	[void!]
 ]
 glp-get-st: "glp_get_st" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-pr: "glp_get_pr" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-du: "glp_get_du" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-ob: "glp_get_ob" [
 	*lp	[glp_	return: 	[double!]
 ]
 glp-get-ro: "glp_get_ro" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-ro: "glp_get_ro" [
 	*lp	[glp_	return: 	[double!]
@@ -280,7 +280,7 @@ glp-get-ro: "glp_get_ro" [
 	*lp	[glp_	return: 	[double!]
 ]
 glp-get-co: "glp_get_co" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-co: "glp_get_co" [
 	*lp	[glp_	return: 	[double!]
@@ -289,13 +289,13 @@ glp-get-co: "glp_get_co" [
 	*lp	[glp_	return: 	[double!]
 ]
 glp-get-un: "glp_get_un" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-interi: "glp_interi" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-ipt-st: "glp_ipt_st" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-ipt-ob: "glp_ipt_ob" [
 	*lp	[glp_	return: 	[double!]
@@ -316,22 +316,22 @@ glp-set-co: "glp_set_co" [
 	*mip	[glp	return: 	[void!]
 ]
 glp-get-co: "glp_get_co" [
-	*mip	[glp	return: 	"[integer!
+	*mip	[glp	return: 	[integer!]
 ]
 glp-get-nu: "glp_get_nu" [
-	*mip	[glp	return: 	"[integer!
+	*mip	[glp	return: 	[integer!]
 ]
 glp-get-nu: "glp_get_nu" [
-	*mip	[glp	return: 	"[integer!
+	*mip	[glp	return: 	[integer!]
 ]
 glp-intopt: "glp_intopt" [
-	*mip	[glp	return: 	"[integer!
+	*mip	[glp	return: 	[integer!]
 ]
 glp-init-i: "glp_init_i" [
 	*parm	["g	return: 	[void!]
 ]
 glp-mip-st: "glp_mip_st" [
-	*mip	[glp	return: 	"[integer!
+	*mip	[glp	return: 	[integer!]
 ]
 glp-mip-ob: "glp_mip_ob" [
 	*mip	[glp	return: 	[double!]
@@ -343,31 +343,31 @@ glp-mip-co: "glp_mip_co" [
 	*mip	[glp	return: 	[double!]
 ]
 glp-read-s: "glp_read_s" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-write-: "glp_write_" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-read-i: "glp_read_i" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-write-: "glp_write_" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-read-m: "glp_read_m" [
-	*mip	[glp	return: 	"[integer!
+	*mip	[glp	return: 	[integer!]
 ]
 glp-write-: "glp_write_" [
-	*mip	[glp	return: 	"[integer!
+	*mip	[glp	return: 	[integer!]
 ]
 glp-bf-exi: "glp_bf_exi" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-factor: "glp_factor" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-bf-upd: "glp_bf_upd" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-bf: "glp_get_bf" [
 	*lp	[glp_	return: 	[void!]
@@ -376,13 +376,13 @@ glp-set-bf: "glp_set_bf" [
 	*lp	[glp_	return: 	[void!]
 ]
 glp-get-bh: "glp_get_bh" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-ro: "glp_get_ro" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-get-co: "glp_get_co" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-ftran: "glp_ftran" [
 	*lp	[glp_	return: 	[void!]
@@ -391,13 +391,13 @@ glp-btran: "glp_btran" [
 	*lp	[glp_	return: 	[void!]
 ]
 glp-eval-t: "glp_eval_t" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-eval-t: "glp_eval_t" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-ios-re: "glp_ios_re" [
-	*tree	["g	return: 	"[integer!
+	*tree	["g	return: 	[integer!]
 ]
 *glp-ios-g: "*glp_ios_g" [
 	*tree	["g	return: 	[glp_prob!
@@ -406,25 +406,25 @@ glp-ios-tr: "glp_ios_tr" [
 	*tree	["g	return: 	[void!]
 ]
 glp-ios-cu: "glp_ios_cu" [
-	*tree	["g	return: 	"[integer!
+	*tree	["g	return: 	[integer!]
 ]
 glp-ios-ne: "glp_ios_ne" [
-	*tree	["g	return: 	"[integer!
+	*tree	["g	return: 	[integer!]
 ]
 glp-ios-pr: "glp_ios_pr" [
-	*tree	["g	return: 	"[integer!
+	*tree	["g	return: 	[integer!]
 ]
 glp-ios-up: "glp_ios_up" [
-	*tree	["g	return: 	"[integer!
+	*tree	["g	return: 	[integer!]
 ]
 glp-ios-no: "glp_ios_no" [
-	*tree	["g	return: 	"[integer!
+	*tree	["g	return: 	[integer!]
 ]
 glp-ios-no: "glp_ios_no" [
 	*tree	["g	return: 	[double!]
 ]
 glp-ios-be: "glp_ios_be" [
-	*tree	["g	return: 	"[integer!
+	*tree	["g	return: 	[integer!]
 ]
 glp-ios-mi: "glp_ios_mi" [
 	*tree	["g	return: 	[double!]
@@ -436,10 +436,10 @@ glp-ios-ro: "glp_ios_ro" [
 	*tree	["g	return: 	[void!]
 ]
 glp-ios-po: "glp_ios_po" [
-	*tree	["g	return: 	"[integer!
+	*tree	["g	return: 	[integer!]
 ]
 glp-ios-ad: "glp_ios_ad" [
-	*tree	["g	return: 	"[integer!
+	*tree	["g	return: 	[integer!]
 ]
 glp-ios-de: "glp_ios_de" [
 	*tree	["g	return: 	[void!]
@@ -448,7 +448,7 @@ glp-ios-cl: "glp_ios_cl" [
 	*tree	["g	return: 	[void!]
 ]
 glp-ios-ca: "glp_ios_ca" [
-	*tree	["g	return: 	"[integer!
+	*tree	["g	return: 	[integer!]
 ]
 glp-ios-br: "glp_ios_br" [
 	*tree	["g	return: 	[void!]
@@ -457,7 +457,7 @@ glp-ios-se: "glp_ios_se" [
 	*tree	["g	return: 	[void!]
 ]
 glp-ios-he: "glp_ios_he" [
-	*tree	["g	return: 	"[integer!
+	*tree	["g	return: 	[integer!]
 ]
 glp-ios-te: "glp_ios_te" [
 	*tree	["g	return: 	[void!]
@@ -481,37 +481,37 @@ glp-mem-li: "glp_mem_li" [
 	limit	[in	return: 	[void!]
 ]
 glp-read-m: "glp_read_m" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-write-: "glp_write_" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-read-l: "glp_read_l" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-write-: "glp_write_" [
-	*lp	[glp_	return: 	"[integer!
+	*lp	[glp_	return: 	[integer!]
 ]
 glp-mpl-re: "glp_mpl_re" [
-	*tran	["g	return: 	"[integer!
+	*tran	["g	return: 	[integer!]
 ]
 glp-mpl-re: "glp_mpl_re" [
-	*tran	["g	return: 	"[integer!
+	*tran	["g	return: 	[integer!]
 ]
 glp-mpl-ge: "glp_mpl_ge" [
-	*tran	["g	return: 	"[integer!
+	*tran	["g	return: 	[integer!]
 ]
 glp-mpl-bu: "glp_mpl_bu" [
 	*tran	["g	return: 	[void!]
 ]
 glp-mpl-po: "glp_mpl_po" [
-	*tran	["g	return: 	"[integer!
+	*tran	["g	return: 	[integer!]
 ]
 glp-mpl-fr: "glp_mpl_fr" [
 	*tran	["g	return: 	[void!]
 ]
 glp-main: "glp_main" [
-	argc	[int	return: 	"[integer!
+	argc	[int	return: 	[integer!]
 ]
 #define LPX			glp_prob
 #define LPX-LP			100
@@ -598,11 +598,11 @@ glp-main: "glp_main" [
 #define LPX-K-USECUTS			329
 #define LPX-K-BFTYPE			330
 #define LPX-K-MIPGAP			331
-#define LPX-C-COVER			0x01
-#define LPX-C-CLIQUE			0x02
-#define LPX-C-GOMORY			0x04
-#define LPX-C-MIR			0x08
-#define LPX-C-ALL			0xFF
+#define LPX-C-COVER			1
+#define LPX-C-CLIQUE			2
+#define LPX-C-GOMORY			4
+#define LPX-C-MIR			8
+#define LPX-C-ALL			255
 #define lpx-create-prob			_glp_lpx_create_prob
 #define lpx-set-prob-name			_glp_lpx_set_prob_name
 lpx-set-pr: "lpx_set_pr" [
@@ -618,11 +618,11 @@ lpx-set-ob: "lpx_set_ob" [
 ]
 #define lpx-add-rows			_glp_lpx_add_rows
 lpx-add-ro: "lpx_add_ro" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-add-cols			_glp_lpx_add_cols
 lpx-add-co: "lpx_add_co" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-set-row-name			_glp_lpx_set_row_name
 lpx-set-ro: "lpx_set_ro" [
@@ -670,35 +670,35 @@ lpx-delete: "lpx_delete" [
 ]
 #define lpx-get-prob-name			_glp_lpx_get_prob_name
 *lpx-get-p: "*lpx_get_p" [
-	*lp	["LPX	return: 	["char"]
+	*lp	["LPX	return: 	[char!]
 ]
 #define lpx-get-obj-name			_glp_lpx_get_obj_name
 *lpx-get-o: "*lpx_get_o" [
-	*lp	["LPX	return: 	["char"]
+	*lp	["LPX	return: 	[char!]
 ]
 #define lpx-get-obj-dir			_glp_lpx_get_obj_dir
 lpx-get-ob: "lpx_get_ob" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-num-rows			_glp_lpx_get_num_rows
 lpx-get-nu: "lpx_get_nu" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-num-cols			_glp_lpx_get_num_cols
 lpx-get-nu: "lpx_get_nu" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-row-name			_glp_lpx_get_row_name
 *lpx-get-r: "*lpx_get_r" [
-	*lp	["LPX	return: 	["char"]
+	*lp	["LPX	return: 	[char!]
 ]
 #define lpx-get-col-name			_glp_lpx_get_col_name
 *lpx-get-c: "*lpx_get_c" [
-	*lp	["LPX	return: 	["char"]
+	*lp	["LPX	return: 	[char!]
 ]
 #define lpx-get-row-type			_glp_lpx_get_row_type
 lpx-get-ro: "lpx_get_ro" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-row-lb			_glp_lpx_get_row_lb
 lpx-get-ro: "lpx_get_ro" [
@@ -714,7 +714,7 @@ lpx-get-ro: "lpx_get_ro" [
 ]
 #define lpx-get-col-type			_glp_lpx_get_col_type
 lpx-get-co: "lpx_get_co" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-col-lb			_glp_lpx_get_col_lb
 lpx-get-co: "lpx_get_co" [
@@ -734,15 +734,15 @@ lpx-get-ob: "lpx_get_ob" [
 ]
 #define lpx-get-num-nz			_glp_lpx_get_num_nz
 lpx-get-nu: "lpx_get_nu" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-mat-row			_glp_lpx_get_mat_row
 lpx-get-ma: "lpx_get_ma" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-mat-col			_glp_lpx_get_mat_col
 lpx-get-ma: "lpx_get_ma" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-create-index			_glp_lpx_create_index
 lpx-create: "lpx_create" [
@@ -750,11 +750,11 @@ lpx-create: "lpx_create" [
 ]
 #define lpx-find-row			_glp_lpx_find_row
 lpx-find-r: "lpx_find_r" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-find-col			_glp_lpx_find_col
 lpx-find-c: "lpx_find_c" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-delete-index			_glp_lpx_delete_index
 lpx-delete: "lpx_delete" [
@@ -790,23 +790,23 @@ lpx-cpx-ba: "lpx_cpx_ba" [
 ]
 #define lpx-simplex			_glp_lpx_simplex
 lpx-simple: "lpx_simple" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-exact			_glp_lpx_exact
 lpx-exact: "lpx_exact" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-status			_glp_lpx_get_status
 lpx-get-st: "lpx_get_st" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-prim-stat			_glp_lpx_get_prim_stat
 lpx-get-pr: "lpx_get_pr" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-dual-stat			_glp_lpx_get_dual_stat
 lpx-get-du: "lpx_get_du" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-obj-val			_glp_lpx_get_obj_val
 lpx-get-ob: "lpx_get_ob" [
@@ -814,7 +814,7 @@ lpx-get-ob: "lpx_get_ob" [
 ]
 #define lpx-get-row-stat			_glp_lpx_get_row_stat
 lpx-get-ro: "lpx_get_ro" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-row-prim			_glp_lpx_get_row_prim
 lpx-get-ro: "lpx_get_ro" [
@@ -830,7 +830,7 @@ lpx-get-ro: "lpx_get_ro" [
 ]
 #define lpx-get-col-stat			_glp_lpx_get_col_stat
 lpx-get-co: "lpx_get_co" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-col-prim			_glp_lpx_get_col_prim
 lpx-get-co: "lpx_get_co" [
@@ -846,7 +846,7 @@ lpx-get-co: "lpx_get_co" [
 ]
 #define lpx-get-ray-info			_glp_lpx_get_ray_info
 lpx-get-ra: "lpx_get_ra" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-check-kkt			_glp_lpx_check_kkt
 lpx-check-: "lpx_check_" [
@@ -854,39 +854,39 @@ lpx-check-: "lpx_check_" [
 ]
 #define lpx-warm-up			_glp_lpx_warm_up
 lpx-warm-u: "lpx_warm_u" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-eval-tab-row			_glp_lpx_eval_tab_row
 lpx-eval-t: "lpx_eval_t" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-eval-tab-col			_glp_lpx_eval_tab_col
 lpx-eval-t: "lpx_eval_t" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-transform-row			_glp_lpx_transform_row
 lpx-transf: "lpx_transf" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-transform-col			_glp_lpx_transform_col
 lpx-transf: "lpx_transf" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-prim-ratio-test			_glp_lpx_prim_ratio_test
 lpx-prim-r: "lpx_prim_r" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-dual-ratio-test			_glp_lpx_dual_ratio_test
 lpx-dual-r: "lpx_dual_r" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-interior			_glp_lpx_interior
 lpx-interi: "lpx_interi" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-ipt-status			_glp_lpx_ipt_status
 lpx-ipt-st: "lpx_ipt_st" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-ipt-obj-val			_glp_lpx_ipt_obj_val
 lpx-ipt-ob: "lpx_ipt_ob" [
@@ -914,7 +914,7 @@ lpx-set-cl: "lpx_set_cl" [
 ]
 #define lpx-get-class			_glp_lpx_get_class
 lpx-get-cl: "lpx_get_cl" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-set-col-kind			_glp_lpx_set_col_kind
 lpx-set-co: "lpx_set_co" [
@@ -922,27 +922,27 @@ lpx-set-co: "lpx_set_co" [
 ]
 #define lpx-get-col-kind			_glp_lpx_get_col_kind
 lpx-get-co: "lpx_get_co" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-num-int			_glp_lpx_get_num_int
 lpx-get-nu: "lpx_get_nu" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-get-num-bin			_glp_lpx_get_num_bin
 lpx-get-nu: "lpx_get_nu" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-integer			_glp_lpx_integer
 lpx-intege: "lpx_intege" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-intopt			_glp_lpx_intopt
 lpx-intopt: "lpx_intopt" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-mip-status			_glp_lpx_mip_status
 lpx-mip-st: "lpx_mip_st" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-mip-obj-val			_glp_lpx_mip_obj_val
 lpx-mip-ob: "lpx_mip_ob" [
@@ -970,7 +970,7 @@ lpx-set-in: "lpx_set_in" [
 ]
 #define lpx-get-int-parm			_glp_lpx_get_int_parm
 lpx-get-in: "lpx_get_in" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-set-real-parm			_glp_lpx_set_real_parm
 lpx-set-re: "lpx_set_re" [
@@ -986,15 +986,15 @@ lpx-get-re: "lpx_get_re" [
 ]
 #define lpx-write-mps			_glp_lpx_write_mps
 lpx-write-: "lpx_write_" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-read-bas			_glp_lpx_read_bas
 lpx-read-b: "lpx_read_b" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-write-bas			_glp_lpx_write_bas
 lpx-write-: "lpx_write_" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-read-freemps			_glp_lpx_read_freemps
 *lpx-read-: "*lpx_read_" [
@@ -1002,7 +1002,7 @@ lpx-write-: "lpx_write_" [
 ]
 #define lpx-write-freemps			_glp_lpx_write_freemps
 lpx-write-: "lpx_write_" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-read-cpxlp			_glp_lpx_read_cpxlp
 *lpx-read-: "*lpx_read_" [
@@ -1010,7 +1010,7 @@ lpx-write-: "lpx_write_" [
 ]
 #define lpx-write-cpxlp			_glp_lpx_write_cpxlp
 lpx-write-: "lpx_write_" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-read-model			_glp_lpx_read_model
 *lpx-read-: "*lpx_read_" [
@@ -1018,33 +1018,33 @@ lpx-write-: "lpx_write_" [
 ]
 #define lpx-print-prob			_glp_lpx_print_prob
 lpx-print-: "lpx_print_" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-print-sol			_glp_lpx_print_sol
 lpx-print-: "lpx_print_" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-print-sens-bnds			_glp_lpx_print_sens_bnds
 lpx-print-: "lpx_print_" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-print-ips			_glp_lpx_print_ips
 lpx-print-: "lpx_print_" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-print-mip			_glp_lpx_print_mip
 lpx-print-: "lpx_print_" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-is-b-avail			_glp_lpx_is_b_avail
 lpx-is-b-a: "lpx_is_b_a" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-write-pb			_glp_lpx_write_pb
 lpx-write-: "lpx_write_" [
-	*lp	["LPX	return: 	"[integer!
+	*lp	["LPX	return: 	[integer!]
 ]
 #define lpx-main			_glp_lpx_main
 lpx-main: "lpx_main" [
-	argc	[int	return: 	"[integer!
+	argc	[int	return: 	[integer!]
 ]
