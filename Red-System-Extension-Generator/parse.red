@@ -144,7 +144,7 @@ functn: [
 	";"
 	(
 		print "END"
-		append fun load replace/all copy function-name "_" "-"
+		append fun replace/all copy function-name "_" "-"
 		append fun {: "}  
 		append fun function-name 
 		print "app function name"
@@ -153,13 +153,12 @@ functn: [
 		print "app arg block"
 		append fun tab
 		print "app tab"
-		append fun "return"
+		append fun "return: "
 		print "app return"
 		append fun tab
 		print "app tab"
 		print return-type
-		asdf: mold return-type
-		print asdf
+		print mold return-type
 		append fun asdf
 		print "app return-type"
 		append fun "^/]^/"
@@ -206,7 +205,7 @@ test-def1: {#define GLP_MAJOR_VERSION  4
 ;print parse test-f2 functn
 ;print parse test-f3 functn
 ;print parse test-f3 header
-print parse-trace test-f4 header
+;print parse-trace test-f4 header
 ;print file
 
 header-file2: decomment header-file
@@ -214,5 +213,5 @@ write %headerfile2.h header-file2
 header-file3: deifdef header-file2
 write %headerfile3.h header-file3
 
-;parse header-file3 header
+parse header-file3 header
 ;write %headerfinal.h file
