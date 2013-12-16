@@ -31,7 +31,8 @@ functn: [
 	";"
 	(
 		append fun load replace/all copy function-name "_" "-"
-		append fun {: "}  
+		append fun {: "} 
+		print function-name
 		append fun function-name 
 		append fun {" [^/} 
 		append fun arg-block

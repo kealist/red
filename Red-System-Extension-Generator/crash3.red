@@ -13,7 +13,6 @@ r1: [
 	(
 		append substr x
 		append substr y
-		print substr
 	)
 ]
 
@@ -23,7 +22,10 @@ r2: [
 	some r1
 	"]"
 	(
-		append superstr substr
+		b: "glp_set_prob_name glp_get_prob_name"
+        c: load replace/all copy b "_" "-"
+		append superstr b
+		append superstr c
 		print superstr
 	)
 	
