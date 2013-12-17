@@ -45,13 +45,17 @@ Red [
 #include %../common/common.red
 
 
-load-TNetString: function [			"Convert value(s) from (Tagged) NetStrings format."
+load-TNetString: func [				"Convert value(s) from (Tagged) NetStrings format."
 	value			[string! file!]	"TNetStrings value(s)"
+	/objects						"Convert dictionaries to Red objects."
 	/keys							"Convert dictionary keys to Red value."
 	/values							"Convert binary values to Red value."
 	/all							"Always return a block."
 	/into							"Insert result into existing block."
 		out			[block!]		"Result buffer"
+	/local  ; FIXME: #600
+;		here
+		start stop size header binary element
 ][
 	header: [
 		start: 1 9 digit stop: #":"
@@ -98,10 +102,27 @@ load-TNetString: function [			"Convert value(s) from (Tagged) NetStrings format.
 				)
 				keep (value)
 			| ahead [size skip #"]"] collect [any element] #"]"					; list
-			| ahead [size skip #"}"] collect [any [								; dictionary
-					header  (value: keys) binary								; key
-					element
-				]]
+			| ahead [size skip #"}"]											; dictionary
+				[if (objects) then [
+					collect set value [any [
+						header  ahead [size skip #","]							; key
+						start: size skip stop: skip
+
+						if (set-word? value: load/into append append/part
+							clear _string  start  offset? start stop  #":"
+							clear _item
+						)
+							keep (value)
+
+						element
+					]]
+					keep (context value)
+				]|
+					collect [any [
+						header  (value: keys) binary							; key
+						element
+					]]
+				]
 				#"}"
 			]
 		]
@@ -150,6 +171,27 @@ to-TNetString: function [			"Convert value to (Tagged) NetString."
 				#"!"
 		]
 		char! [append append append out  "1:" value #","]
+		object! [
+			append out #":"
+
+			foreach name words-of value [
+				append insert  tail out
+					length? append insert  tail out  #":" name
+					#","
+
+				unless either deep [
+					to-TNetString/map/deep/into do [value/:name]  tail out
+				][
+					to-TNetString/into do [value/:name]  tail out
+				][
+					return none
+				]
+			]
+			; FIXME: only Latin-1 yields proper size
+			if 999'999'999 < size: (length? out) - 1 [return none]
+
+			append insert out  size #"}"
+		]
 	][
 		case [
 			any-string? value [
