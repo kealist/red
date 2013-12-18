@@ -21,8 +21,8 @@ The script will return the following:
 
 ##To-do List
 
-[x]Function declaration
-[x]#define
-[x]Parameter Pointers 
-[ ]#typedef rule
-[ ]Dynamic type handling
+- [x] Function declaration
+- [x] #define
+- [x] Parameter Pointers 
+- [ ] #typedef rule
+- [ ] Dynamic type handling
