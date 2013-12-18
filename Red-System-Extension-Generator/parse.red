@@ -49,6 +49,8 @@ deifdef: func [str [string!] /local f c remove-ifdef ifdef] [
 ]
 
 p-type: [ ;parameter type
+	(param-type: copy "")
+    "char" (param-type: [byte!]) |
 	"void" (param-type: [void!]) | 
 	"int" (param-type: [integer!]) | 
 	"double" (param-type: [double!]) |
@@ -57,8 +59,9 @@ p-type: [ ;parameter type
 	copy unknown-type some chars (param-type: compose [(unknown-type)])
 ]
 
-r-type: [ ;return type (return-type: copy [])
-	"char" (return-type: [char!]) |
+r-type: [ ;return type 
+	(return-type: copy [])
+	"char" (return-type: [byte!]) |
 	"void" (return-type: [void!]) |
 	"int" (return-type: [integer!]) | 
 	"double" (return-type: [double!]) |
@@ -102,13 +105,17 @@ define: [
 ]
 
 args: [
-	(arg-block: copy "")
+	(
+		arg-block: copy ""
+	)
 	some [
+		(ptr: false)
 		any-spaces
 		opt "const"
 		opt spaces
 		p-type
 		spaces
+		opt copy ptr "*"
 		copy param-name some chars 
 		any-spaces
 		opt array
@@ -118,7 +125,9 @@ args: [
 			append arg-block tab
 			append arg-block (load param-name) 
 			append arg-block tab
+			if (ptr) [append arg-block {[pointer! }]
 			append arg-block mold compose [(param-type)]
+			if (ptr) [append arg-block {]}]
 			append arg-block newline
 		)
 	]
