@@ -10,10 +10,19 @@ Current functionality is that it can parse functions in a header and return the 
 The script will return the following:
 
     glp-set-mat-row: "glp_set_mat_row" [
-        *lp     [glp_prob!]
+        lp      [pointer! [glp_prob!]]
         i       [integer!]
         len     [integer!]
         ind     [integer!]
         val     [double!]
         return  ["void"]
     ]
+
+
+##To-do List
+
+[x]Function declaration
+[x]#define
+[x]Parameter Pointers 
+[ ]#typedef rule
+[ ]Dynamic type handling
