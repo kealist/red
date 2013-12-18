@@ -1,6 +1,7 @@
 Red []
 
 #include %../C-library/input-output.red
+#include %../C-library/ANSI.red
 
 header-file: read %glpk.h
 file: copy {}
@@ -15,8 +16,8 @@ array: [{[} any-spaces any chars any-spaces {]}]
 ;removes c-comments
 decomment: func [str [string!] /local f c com remove-comments] [
 	com: [
-		"/*" 
-		skip thru "*/"
+		"/*" skip thru "*/" |
+		"//" skip thru newline
 	]
 	f: copy ""
 	remove-comments: [ 
@@ -57,12 +58,19 @@ p-type: [ ;parameter type
 ]
 
 r-type: [ ;return type (return-type: copy [])
+	"char" (return-type: [char!]) |
 	"void" (return-type: [void!]) |
-	"int" (return-type: "[integer!]") | 
+	"int" (return-type: [integer!]) | 
 	"double" (return-type: [double!]) |
 	"float" (return-type: [float!]) |
 	"glp_prob" (return-type: [glp_prob!]) |
 	copy unknown-r-type some chars (return-type: (compose [(unknown-r-type)]))
+]
+
+hex: [
+	"0x"
+	copy def-val some chars	
+	(def-val: load-hex def-val)
 ]
 
 comment: [
@@ -83,13 +91,13 @@ define: [
 	(	;print "define"
 		def: copy "#define "
 	)
-	"#define" spaces copy def-var some chars spaces copy def-val some chars
+	"#define" spaces copy def-var some chars spaces [hex | copy def-val some chars]
 	(
 		append def replace/all def-var "_" "-"
 		append def "^-^-^-"
 		append def def-val
+		append def newline
 		append file def
-		print def
 	)
 ]
 
@@ -117,8 +125,7 @@ args: [
 ]
 
 field: [
-	
-	some chars spaces some chars any-spaces {;} (print "field")
+	some chars spaces some chars any-spaces {;} ;(print "field")
 ]
 
 ;typedef struct { int lo, hi; } glp_long;
@@ -132,43 +139,34 @@ functn: [
 	(fun: copy "")
 	any-spaces
 	r-type
-	(print "return type")
+	;(print "return type")
 	spaces
-	copy function-name some chars
-	(print "function name")
+	copy funct-name some chars
+	;(print "function name")
 	"("
 	args
-	(print "arguments")
+;	(print "arguments")
 	")"
 	any-spaces
 	";"
 	(
-		print "END"
-		append fun replace/all copy function-name "_" "-"
+	;	append file reduce [(replace/all copy funct-name "_" "-") {: "} funct-name {" [^/} arg-block tab {return: } tab (mold return-type) "^/]^/"]
+		append fun replace/all copy funct-name "_" "-"
 		append fun {: "}  
-		append fun function-name 
-		print "app function name"
+		append fun funct-name 
 		append fun {" [^/} 
 		append fun arg-block
-		print "app arg block"
 		append fun tab
-		print "app tab"
 		append fun "return: "
-		print "app return"
 		append fun tab
-		print "app tab"
-		print return-type
-		print mold return-type
-		append fun asdf
-		print "app return-type"
+		append fun mold return-type
 		append fun "^/]^/"
 		append file fun
-		print fun
 	)
 ]
 
 header: [
-	some [ functn |  define | skip (print "skip")]
+	some [ functn |  define | skip]
 ] ;typedef (print "typedef") |
 
 test-arg1: {double i, int len}
@@ -212,6 +210,5 @@ header-file2: decomment header-file
 write %headerfile2.h header-file2
 header-file3: deifdef header-file2
 write %headerfile3.h header-file3
-
-parse header-file3 header
-;write %headerfinal.h file
+print parse header-file3 header
+write %headerfinal.reds file

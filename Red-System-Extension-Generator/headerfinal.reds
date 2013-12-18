@@ -99,419 +99,708 @@
 #define GLP-EINSTAB			17
 #define GLP-MPS-DECK			1
 #define GLP-MPS-FILE			2
-glp-set-pr: "glp_set_pr" [
-	*lp	[glp_	return: 	[void!]
+glp-set-prob-name: "glp_set_prob_name" [
+	*lp	[glp_prob!]
+	*name	["char"]
+	return: 	[void!]
 ]
-glp-set-ob: "glp_set_ob" [
-	*lp	[glp_	return: 	[void!]
+glp-set-obj-name: "glp_set_obj_name" [
+	*lp	[glp_prob!]
+	*name	["char"]
+	return: 	[void!]
 ]
-glp-set-ob: "glp_set_ob" [
-	*lp	[glp_	return: 	[void!]
+glp-set-obj-dir: "glp_set_obj_dir" [
+	*lp	[glp_prob!]
+	dir	[integer!]
+	return: 	[void!]
 ]
-glp-add-ro: "glp_add_ro" [
-	*lp	[glp_	return: 	[integer!]
+glp-add-rows: "glp_add_rows" [
+	*lp	[glp_prob!]
+	nrs	[integer!]
+	return: 	[integer!]
 ]
-glp-add-co: "glp_add_co" [
-	*lp	[glp_	return: 	[integer!]
+glp-add-cols: "glp_add_cols" [
+	*lp	[glp_prob!]
+	ncs	[integer!]
+	return: 	[integer!]
 ]
-glp-set-ro: "glp_set_ro" [
-	*lp	[glp_	return: 	[void!]
+glp-set-row-name: "glp_set_row_name" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	*name	["char"]
+	return: 	[void!]
 ]
-glp-set-co: "glp_set_co" [
-	*lp	[glp_	return: 	[void!]
+glp-set-col-name: "glp_set_col_name" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	*name	["char"]
+	return: 	[void!]
 ]
-glp-set-ro: "glp_set_ro" [
-	*lp	[glp_	return: 	[void!]
+glp-set-row-bnds: "glp_set_row_bnds" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	type	[integer!]
+	lb	[double!]
+	ub	[double!]
+	return: 	[void!]
 ]
-glp-set-co: "glp_set_co" [
-	*lp	[glp_	return: 	[void!]
+glp-set-col-bnds: "glp_set_col_bnds" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	type	[integer!]
+	lb	[double!]
+	ub	[double!]
+	return: 	[void!]
 ]
-glp-set-ob: "glp_set_ob" [
-	*lp	[glp_	return: 	[void!]
+glp-set-obj-coef: "glp_set_obj_coef" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	coef	[double!]
+	return: 	[void!]
 ]
-glp-set-ma: "glp_set_ma" [
-	*lp	[glp_	return: 	[void!]
+glp-set-mat-row: "glp_set_mat_row" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	len	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[void!]
 ]
-glp-set-ma: "glp_set_ma" [
-	*lp	[glp_	return: 	[void!]
+glp-set-mat-col: "glp_set_mat_col" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	len	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[void!]
 ]
-glp-load-m: "glp_load_m" [
-	*lp	[glp_	return: 	[void!]
+glp-load-matrix: "glp_load_matrix" [
+	*lp	[glp_prob!]
+	ne	[integer!]
+	ia	[integer!]
+	ja	[integer!]
+	ar	[double!]
+	return: 	[void!]
 ]
-glp-del-ro: "glp_del_ro" [
-	*lp	[glp_	return: 	[void!]
+glp-del-rows: "glp_del_rows" [
+	*lp	[glp_prob!]
+	nrs	[integer!]
+	num	[integer!]
+	return: 	[void!]
 ]
-glp-del-co: "glp_del_co" [
-	*lp	[glp_	return: 	[void!]
+glp-del-cols: "glp_del_cols" [
+	*lp	[glp_prob!]
+	ncs	[integer!]
+	num	[integer!]
+	return: 	[void!]
 ]
-glp-copy-p: "glp_copy_p" [
-	*dest	[gl	return: 	[void!]
+glp-copy-prob: "glp_copy_prob" [
+	*dest	[glp_prob!]
+	*prob	[glp_prob!]
+	names	[integer!]
+	return: 	[void!]
 ]
-glp-erase-: "glp_erase_" [
-	*lp	[glp_	return: 	[void!]
+glp-erase-prob: "glp_erase_prob" [
+	*lp	[glp_prob!]
+	return: 	[void!]
 ]
-glp-delete: "glp_delete" [
-	*lp	[glp_	return: 	[void!]
+glp-delete-prob: "glp_delete_prob" [
+	*lp	[glp_prob!]
+	return: 	[void!]
 ]
-*glp-get-p: "*glp_get_p" [
-	*lp	[glp_	return: 	[char!]
+*glp-get-prob-name: "*glp_get_prob_name" [
+	*lp	[glp_prob!]
+	return: 	[char!]
 ]
-*glp-get-o: "*glp_get_o" [
-	*lp	[glp_	return: 	[char!]
+*glp-get-obj-name: "*glp_get_obj_name" [
+	*lp	[glp_prob!]
+	return: 	[char!]
 ]
-glp-get-ob: "glp_get_ob" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-obj-dir: "glp_get_obj_dir" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-get-nu: "glp_get_nu" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-num-rows: "glp_get_num_rows" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-get-nu: "glp_get_nu" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-num-cols: "glp_get_num_cols" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-*glp-get-r: "*glp_get_r" [
-	*lp	[glp_	return: 	[char!]
+*glp-get-row-name: "*glp_get_row_name" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	return: 	[char!]
 ]
-*glp-get-c: "*glp_get_c" [
-	*lp	[glp_	return: 	[char!]
+*glp-get-col-name: "*glp_get_col_name" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[char!]
 ]
-glp-get-ro: "glp_get_ro" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-row-type: "glp_get_row_type" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	return: 	[integer!]
 ]
-glp-get-ro: "glp_get_ro" [
-	*lp	[glp_	return: 	[double!]
+glp-get-row-lb: "glp_get_row_lb" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	return: 	[double!]
 ]
-glp-get-ro: "glp_get_ro" [
-	*lp	[glp_	return: 	[double!]
+glp-get-row-ub: "glp_get_row_ub" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	return: 	[double!]
 ]
-glp-get-co: "glp_get_co" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-col-type: "glp_get_col_type" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[integer!]
 ]
-glp-get-co: "glp_get_co" [
-	*lp	[glp_	return: 	[double!]
+glp-get-col-lb: "glp_get_col_lb" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[double!]
 ]
-glp-get-co: "glp_get_co" [
-	*lp	[glp_	return: 	[double!]
+glp-get-col-ub: "glp_get_col_ub" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[double!]
 ]
-glp-get-ob: "glp_get_ob" [
-	*lp	[glp_	return: 	[double!]
+glp-get-obj-coef: "glp_get_obj_coef" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[double!]
 ]
-glp-get-nu: "glp_get_nu" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-num-nz: "glp_get_num_nz" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-get-ma: "glp_get_ma" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-mat-row: "glp_get_mat_row" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[integer!]
 ]
-glp-get-ma: "glp_get_ma" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-mat-col: "glp_get_mat_col" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[integer!]
 ]
-glp-create: "glp_create" [
-	*lp	[glp_	return: 	[void!]
+glp-create-index: "glp_create_index" [
+	*lp	[glp_prob!]
+	return: 	[void!]
 ]
-glp-find-r: "glp_find_r" [
-	*lp	[glp_	return: 	[integer!]
+glp-find-row: "glp_find_row" [
+	*lp	[glp_prob!]
+	*name	["char"]
+	return: 	[integer!]
 ]
-glp-find-c: "glp_find_c" [
-	*lp	[glp_	return: 	[integer!]
+glp-find-col: "glp_find_col" [
+	*lp	[glp_prob!]
+	*name	["char"]
+	return: 	[integer!]
 ]
-glp-delete: "glp_delete" [
-	*lp	[glp_	return: 	[void!]
+glp-delete-index: "glp_delete_index" [
+	*lp	[glp_prob!]
+	return: 	[void!]
 ]
-glp-set-ri: "glp_set_ri" [
-	*lp	[glp_	return: 	[void!]
+glp-set-rii: "glp_set_rii" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	rii	[double!]
+	return: 	[void!]
 ]
-glp-set-sj: "glp_set_sj" [
-	*lp	[glp_	return: 	[void!]
+glp-set-sjj: "glp_set_sjj" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	sjj	[double!]
+	return: 	[void!]
 ]
-glp-get-ri: "glp_get_ri" [
-	*lp	[glp_	return: 	[double!]
+glp-get-rii: "glp_get_rii" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	return: 	[double!]
 ]
-glp-get-sj: "glp_get_sj" [
-	*lp	[glp_	return: 	[double!]
+glp-get-sjj: "glp_get_sjj" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[double!]
 ]
-glp-scale-: "glp_scale_" [
-	*lp	[glp_	return: 	[void!]
+glp-scale-prob: "glp_scale_prob" [
+	*lp	[glp_prob!]
+	flags	[integer!]
+	return: 	[void!]
 ]
-glp-unscal: "glp_unscal" [
-	*lp	[glp_	return: 	[void!]
+glp-unscale-prob: "glp_unscale_prob" [
+	*lp	[glp_prob!]
+	return: 	[void!]
 ]
-glp-set-ro: "glp_set_ro" [
-	*lp	[glp_	return: 	[void!]
+glp-set-row-stat: "glp_set_row_stat" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	stat	[integer!]
+	return: 	[void!]
 ]
-glp-set-co: "glp_set_co" [
-	*lp	[glp_	return: 	[void!]
+glp-set-col-stat: "glp_set_col_stat" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	stat	[integer!]
+	return: 	[void!]
 ]
-glp-std-ba: "glp_std_ba" [
-	*lp	[glp_	return: 	[void!]
+glp-std-basis: "glp_std_basis" [
+	*lp	[glp_prob!]
+	return: 	[void!]
 ]
-glp-adv-ba: "glp_adv_ba" [
-	*lp	[glp_	return: 	[void!]
+glp-adv-basis: "glp_adv_basis" [
+	*lp	[glp_prob!]
+	flags	[integer!]
+	return: 	[void!]
 ]
-glp-cpx-ba: "glp_cpx_ba" [
-	*lp	[glp_	return: 	[void!]
+glp-cpx-basis: "glp_cpx_basis" [
+	*lp	[glp_prob!]
+	return: 	[void!]
 ]
-glp-simple: "glp_simple" [
-	*lp	[glp_	return: 	[integer!]
+glp-simplex: "glp_simplex" [
+	*lp	[glp_prob!]
+	*parm	["glp_smcp"]
+	return: 	[integer!]
 ]
 glp-exact: "glp_exact" [
-	*lp	[glp_	return: 	[integer!]
+	*lp	[glp_prob!]
+	*parm	["glp_smcp"]
+	return: 	[integer!]
 ]
-glp-init-s: "glp_init_s" [
-	*parm	["g	return: 	[void!]
+glp-init-smcp: "glp_init_smcp" [
+	*parm	["glp_smcp"]
+	return: 	[void!]
 ]
-glp-get-st: "glp_get_st" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-status: "glp_get_status" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-get-pr: "glp_get_pr" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-prim-stat: "glp_get_prim_stat" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-get-du: "glp_get_du" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-dual-stat: "glp_get_dual_stat" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-get-ob: "glp_get_ob" [
-	*lp	[glp_	return: 	[double!]
+glp-get-obj-val: "glp_get_obj_val" [
+	*lp	[glp_prob!]
+	return: 	[double!]
 ]
-glp-get-ro: "glp_get_ro" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-row-stat: "glp_get_row_stat" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	return: 	[integer!]
 ]
-glp-get-ro: "glp_get_ro" [
-	*lp	[glp_	return: 	[double!]
+glp-get-row-prim: "glp_get_row_prim" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	return: 	[double!]
 ]
-glp-get-ro: "glp_get_ro" [
-	*lp	[glp_	return: 	[double!]
+glp-get-row-dual: "glp_get_row_dual" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	return: 	[double!]
 ]
-glp-get-co: "glp_get_co" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-col-stat: "glp_get_col_stat" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[integer!]
 ]
-glp-get-co: "glp_get_co" [
-	*lp	[glp_	return: 	[double!]
+glp-get-col-prim: "glp_get_col_prim" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[double!]
 ]
-glp-get-co: "glp_get_co" [
-	*lp	[glp_	return: 	[double!]
+glp-get-col-dual: "glp_get_col_dual" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[double!]
 ]
-glp-get-un: "glp_get_un" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-unbnd-ray: "glp_get_unbnd_ray" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-interi: "glp_interi" [
-	*lp	[glp_	return: 	[integer!]
+glp-interior: "glp_interior" [
+	*lp	[glp_prob!]
+	*parm	[void!]
+	return: 	[integer!]
 ]
-glp-ipt-st: "glp_ipt_st" [
-	*lp	[glp_	return: 	[integer!]
+glp-ipt-status: "glp_ipt_status" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-ipt-ob: "glp_ipt_ob" [
-	*lp	[glp_	return: 	[double!]
+glp-ipt-obj-val: "glp_ipt_obj_val" [
+	*lp	[glp_prob!]
+	return: 	[double!]
 ]
-glp-ipt-ro: "glp_ipt_ro" [
-	*lp	[glp_	return: 	[double!]
+glp-ipt-row-prim: "glp_ipt_row_prim" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	return: 	[double!]
 ]
-glp-ipt-ro: "glp_ipt_ro" [
-	*lp	[glp_	return: 	[double!]
+glp-ipt-row-dual: "glp_ipt_row_dual" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	return: 	[double!]
 ]
-glp-ipt-co: "glp_ipt_co" [
-	*lp	[glp_	return: 	[double!]
+glp-ipt-col-prim: "glp_ipt_col_prim" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[double!]
 ]
-glp-ipt-co: "glp_ipt_co" [
-	*lp	[glp_	return: 	[double!]
+glp-ipt-col-dual: "glp_ipt_col_dual" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[double!]
 ]
-glp-set-co: "glp_set_co" [
-	*mip	[glp	return: 	[void!]
+glp-set-col-kind: "glp_set_col_kind" [
+	*mip	[glp_prob!]
+	j	[integer!]
+	kind	[integer!]
+	return: 	[void!]
 ]
-glp-get-co: "glp_get_co" [
-	*mip	[glp	return: 	[integer!]
+glp-get-col-kind: "glp_get_col_kind" [
+	*mip	[glp_prob!]
+	j	[integer!]
+	return: 	[integer!]
 ]
-glp-get-nu: "glp_get_nu" [
-	*mip	[glp	return: 	[integer!]
+glp-get-num-int: "glp_get_num_int" [
+	*mip	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-get-nu: "glp_get_nu" [
-	*mip	[glp	return: 	[integer!]
+glp-get-num-bin: "glp_get_num_bin" [
+	*mip	[glp_prob!]
+	return: 	[integer!]
 ]
 glp-intopt: "glp_intopt" [
-	*mip	[glp	return: 	[integer!]
+	*mip	[glp_prob!]
+	*parm	["glp_iocp"]
+	return: 	[integer!]
 ]
-glp-init-i: "glp_init_i" [
-	*parm	["g	return: 	[void!]
+glp-init-iocp: "glp_init_iocp" [
+	*parm	["glp_iocp"]
+	return: 	[void!]
 ]
-glp-mip-st: "glp_mip_st" [
-	*mip	[glp	return: 	[integer!]
+glp-mip-status: "glp_mip_status" [
+	*mip	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-mip-ob: "glp_mip_ob" [
-	*mip	[glp	return: 	[double!]
+glp-mip-obj-val: "glp_mip_obj_val" [
+	*mip	[glp_prob!]
+	return: 	[double!]
 ]
-glp-mip-ro: "glp_mip_ro" [
-	*mip	[glp	return: 	[double!]
+glp-mip-row-val: "glp_mip_row_val" [
+	*mip	[glp_prob!]
+	i	[integer!]
+	return: 	[double!]
 ]
-glp-mip-co: "glp_mip_co" [
-	*mip	[glp	return: 	[double!]
+glp-mip-col-val: "glp_mip_col_val" [
+	*mip	[glp_prob!]
+	j	[integer!]
+	return: 	[double!]
 ]
-glp-read-s: "glp_read_s" [
-	*lp	[glp_	return: 	[integer!]
+glp-read-sol: "glp_read_sol" [
+	*lp	[glp_prob!]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-write-: "glp_write_" [
-	*lp	[glp_	return: 	[integer!]
+glp-write-sol: "glp_write_sol" [
+	*lp	[glp_prob!]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-read-i: "glp_read_i" [
-	*lp	[glp_	return: 	[integer!]
+glp-read-ipt: "glp_read_ipt" [
+	*lp	[glp_prob!]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-write-: "glp_write_" [
-	*lp	[glp_	return: 	[integer!]
+glp-write-ipt: "glp_write_ipt" [
+	*lp	[glp_prob!]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-read-m: "glp_read_m" [
-	*mip	[glp	return: 	[integer!]
+glp-read-mip: "glp_read_mip" [
+	*mip	[glp_prob!]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-write-: "glp_write_" [
-	*mip	[glp	return: 	[integer!]
+glp-write-mip: "glp_write_mip" [
+	*mip	[glp_prob!]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-bf-exi: "glp_bf_exi" [
-	*lp	[glp_	return: 	[integer!]
+glp-bf-exists: "glp_bf_exists" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-factor: "glp_factor" [
-	*lp	[glp_	return: 	[integer!]
+glp-factorize: "glp_factorize" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-bf-upd: "glp_bf_upd" [
-	*lp	[glp_	return: 	[integer!]
+glp-bf-updated: "glp_bf_updated" [
+	*lp	[glp_prob!]
+	return: 	[integer!]
 ]
-glp-get-bf: "glp_get_bf" [
-	*lp	[glp_	return: 	[void!]
+glp-get-bfcp: "glp_get_bfcp" [
+	*lp	[glp_prob!]
+	*parm	["glp_bfcp"]
+	return: 	[void!]
 ]
-glp-set-bf: "glp_set_bf" [
-	*lp	[glp_	return: 	[void!]
+glp-set-bfcp: "glp_set_bfcp" [
+	*lp	[glp_prob!]
+	*parm	["glp_bfcp"]
+	return: 	[void!]
 ]
-glp-get-bh: "glp_get_bh" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-bhead: "glp_get_bhead" [
+	*lp	[glp_prob!]
+	k	[integer!]
+	return: 	[integer!]
 ]
-glp-get-ro: "glp_get_ro" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-row-bind: "glp_get_row_bind" [
+	*lp	[glp_prob!]
+	i	[integer!]
+	return: 	[integer!]
 ]
-glp-get-co: "glp_get_co" [
-	*lp	[glp_	return: 	[integer!]
+glp-get-col-bind: "glp_get_col_bind" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[integer!]
 ]
 glp-ftran: "glp_ftran" [
-	*lp	[glp_	return: 	[void!]
+	*lp	[glp_prob!]
+	x	[double!]
+	return: 	[void!]
 ]
 glp-btran: "glp_btran" [
-	*lp	[glp_	return: 	[void!]
+	*lp	[glp_prob!]
+	x	[double!]
+	return: 	[void!]
 ]
-glp-eval-t: "glp_eval_t" [
-	*lp	[glp_	return: 	[integer!]
+glp-eval-tab-row: "glp_eval_tab_row" [
+	*lp	[glp_prob!]
+	k	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[integer!]
 ]
-glp-eval-t: "glp_eval_t" [
-	*lp	[glp_	return: 	[integer!]
+glp-eval-tab-col: "glp_eval_tab_col" [
+	*lp	[glp_prob!]
+	k	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[integer!]
 ]
-glp-ios-re: "glp_ios_re" [
-	*tree	["g	return: 	[integer!]
+glp-ios-reason: "glp_ios_reason" [
+	*tree	["glp_tree"]
+	return: 	[integer!]
 ]
-*glp-ios-g: "*glp_ios_g" [
-	*tree	["g	return: 	[glp_prob!
+*glp-ios-get-prob: "*glp_ios_get_prob" [
+	*tree	["glp_tree"]
+	return: 	[glp_prob!]
 ]
-glp-ios-tr: "glp_ios_tr" [
-	*tree	["g	return: 	[void!]
+glp-ios-tree-size: "glp_ios_tree_size" [
+	*tree	["glp_tree"]
+	*a_cnt	[integer!]
+	*n_cnt	[integer!]
+	*t_cnt	[integer!]
+	return: 	[void!]
 ]
-glp-ios-cu: "glp_ios_cu" [
-	*tree	["g	return: 	[integer!]
+glp-ios-curr-node: "glp_ios_curr_node" [
+	*tree	["glp_tree"]
+	return: 	[integer!]
 ]
-glp-ios-ne: "glp_ios_ne" [
-	*tree	["g	return: 	[integer!]
+glp-ios-next-node: "glp_ios_next_node" [
+	*tree	["glp_tree"]
+	p	[integer!]
+	return: 	[integer!]
 ]
-glp-ios-pr: "glp_ios_pr" [
-	*tree	["g	return: 	[integer!]
+glp-ios-prev-node: "glp_ios_prev_node" [
+	*tree	["glp_tree"]
+	p	[integer!]
+	return: 	[integer!]
 ]
-glp-ios-up: "glp_ios_up" [
-	*tree	["g	return: 	[integer!]
+glp-ios-up-node: "glp_ios_up_node" [
+	*tree	["glp_tree"]
+	p	[integer!]
+	return: 	[integer!]
 ]
-glp-ios-no: "glp_ios_no" [
-	*tree	["g	return: 	[integer!]
+glp-ios-node-level: "glp_ios_node_level" [
+	*tree	["glp_tree"]
+	p	[integer!]
+	return: 	[integer!]
 ]
-glp-ios-no: "glp_ios_no" [
-	*tree	["g	return: 	[double!]
+glp-ios-node-bound: "glp_ios_node_bound" [
+	*tree	["glp_tree"]
+	p	[integer!]
+	return: 	[double!]
 ]
-glp-ios-be: "glp_ios_be" [
-	*tree	["g	return: 	[integer!]
+glp-ios-best-node: "glp_ios_best_node" [
+	*tree	["glp_tree"]
+	return: 	[integer!]
 ]
-glp-ios-mi: "glp_ios_mi" [
-	*tree	["g	return: 	[double!]
+glp-ios-mip-gap: "glp_ios_mip_gap" [
+	*tree	["glp_tree"]
+	return: 	[double!]
 ]
-*glp-ios-n: "*glp_ios_n" [
-	*tree	["g	return: 	[void!]
+*glp-ios-node-data: "*glp_ios_node_data" [
+	*tree	["glp_tree"]
+	p	[integer!]
+	return: 	[void!]
 ]
-glp-ios-ro: "glp_ios_ro" [
-	*tree	["g	return: 	[void!]
+glp-ios-row-attr: "glp_ios_row_attr" [
+	*tree	["glp_tree"]
+	i	[integer!]
+	*attr	["glp_attr"]
+	return: 	[void!]
 ]
-glp-ios-po: "glp_ios_po" [
-	*tree	["g	return: 	[integer!]
+glp-ios-pool-size: "glp_ios_pool_size" [
+	*tree	["glp_tree"]
+	return: 	[integer!]
 ]
-glp-ios-ad: "glp_ios_ad" [
-	*tree	["g	return: 	[integer!]
+glp-ios-add-row: "glp_ios_add_row" [
+	*tree	["glp_tree"]
+	*name	["char"]
+	klass	[integer!]
+	flags	[integer!]
+	len	[integer!]
+	ind	[integer!]
+	val	[double!]
+	type	[integer!]
+	rhs	[double!]
+	return: 	[integer!]
 ]
-glp-ios-de: "glp_ios_de" [
-	*tree	["g	return: 	[void!]
+glp-ios-del-row: "glp_ios_del_row" [
+	*tree	["glp_tree"]
+	i	[integer!]
+	return: 	[void!]
 ]
-glp-ios-cl: "glp_ios_cl" [
-	*tree	["g	return: 	[void!]
+glp-ios-clear-pool: "glp_ios_clear_pool" [
+	*tree	["glp_tree"]
+	return: 	[void!]
 ]
-glp-ios-ca: "glp_ios_ca" [
-	*tree	["g	return: 	[integer!]
+glp-ios-can-branch: "glp_ios_can_branch" [
+	*tree	["glp_tree"]
+	j	[integer!]
+	return: 	[integer!]
 ]
-glp-ios-br: "glp_ios_br" [
-	*tree	["g	return: 	[void!]
+glp-ios-branch-upon: "glp_ios_branch_upon" [
+	*tree	["glp_tree"]
+	j	[integer!]
+	sel	[integer!]
+	return: 	[void!]
 ]
-glp-ios-se: "glp_ios_se" [
-	*tree	["g	return: 	[void!]
+glp-ios-select-node: "glp_ios_select_node" [
+	*tree	["glp_tree"]
+	p	[integer!]
+	return: 	[void!]
 ]
-glp-ios-he: "glp_ios_he" [
-	*tree	["g	return: 	[integer!]
+glp-ios-heur-sol: "glp_ios_heur_sol" [
+	*tree	["glp_tree"]
+	x	[double!]
+	return: 	[integer!]
 ]
-glp-ios-te: "glp_ios_te" [
-	*tree	["g	return: 	[void!]
+glp-ios-terminate: "glp_ios_terminate" [
+	*tree	["glp_tree"]
+	return: 	[void!]
 ]
-glp-term-o: "glp_term_o" [
-	flag	[int	return: 	[void!]
+glp-term-out: "glp_term_out" [
+	flag	[integer!]
+	return: 	[void!]
 ]
-*glp-mallo: "*glp_mallo" [
-	size	[int	return: 	[void!]
+*glp-malloc: "*glp_malloc" [
+	size	[integer!]
+	return: 	[void!]
 ]
-*glp-callo: "*glp_callo" [
-	n	[intege	return: 	[void!]
+*glp-calloc: "*glp_calloc" [
+	n	[integer!]
+	size	[integer!]
+	return: 	[void!]
 ]
 glp-free: "glp_free" [
-	*ptr	[voi	return: 	[void!]
+	*ptr	[void!]
+	return: 	[void!]
 ]
-glp-mem-us: "glp_mem_us" [
-	*count	[i	return: 	[void!]
+glp-mem-usage: "glp_mem_usage" [
+	*count	[integer!]
+	*cpeak	[integer!]
+	*total	["glp_long"]
+	*tpeak	["glp_long"]
+	return: 	[void!]
 ]
-glp-mem-li: "glp_mem_li" [
-	limit	[in	return: 	[void!]
+glp-mem-limit: "glp_mem_limit" [
+	limit	[integer!]
+	return: 	[void!]
 ]
-glp-read-m: "glp_read_m" [
-	*lp	[glp_	return: 	[integer!]
+glp-read-mps: "glp_read_mps" [
+	*lp	[glp_prob!]
+	fmt	[integer!]
+	*parm	[void!]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-write-: "glp_write_" [
-	*lp	[glp_	return: 	[integer!]
+glp-write-mps: "glp_write_mps" [
+	*lp	[glp_prob!]
+	fmt	[integer!]
+	*parm	[void!]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-read-l: "glp_read_l" [
-	*lp	[glp_	return: 	[integer!]
+glp-read-lp: "glp_read_lp" [
+	*lp	[glp_prob!]
+	*parm	[void!]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-write-: "glp_write_" [
-	*lp	[glp_	return: 	[integer!]
+glp-write-lp: "glp_write_lp" [
+	*lp	[glp_prob!]
+	*parm	[void!]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-mpl-re: "glp_mpl_re" [
-	*tran	["g	return: 	[integer!]
+glp-mpl-read-model: "glp_mpl_read_model" [
+	*tran	["glp_tran"]
+	*fname	["char"]
+	skip	[integer!]
+	return: 	[integer!]
 ]
-glp-mpl-re: "glp_mpl_re" [
-	*tran	["g	return: 	[integer!]
+glp-mpl-read-data: "glp_mpl_read_data" [
+	*tran	["glp_tran"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-mpl-ge: "glp_mpl_ge" [
-	*tran	["g	return: 	[integer!]
+glp-mpl-generate: "glp_mpl_generate" [
+	*tran	["glp_tran"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
-glp-mpl-bu: "glp_mpl_bu" [
-	*tran	["g	return: 	[void!]
+glp-mpl-build-prob: "glp_mpl_build_prob" [
+	*tran	["glp_tran"]
+	*prob	[glp_prob!]
+	return: 	[void!]
 ]
-glp-mpl-po: "glp_mpl_po" [
-	*tran	["g	return: 	[integer!]
+glp-mpl-postsolve: "glp_mpl_postsolve" [
+	*tran	["glp_tran"]
+	*prob	[glp_prob!]
+	sol	[integer!]
+	return: 	[integer!]
 ]
-glp-mpl-fr: "glp_mpl_fr" [
-	*tran	["g	return: 	[void!]
+glp-mpl-free-wksp: "glp_mpl_free_wksp" [
+	*tran	["glp_tran"]
+	return: 	[void!]
 ]
 glp-main: "glp_main" [
-	argc	[int	return: 	[integer!]
+	argc	[integer!]
+	*argv	["char"]
+	return: 	[integer!]
 ]
 #define LPX			glp_prob
 #define LPX-LP			100
@@ -605,446 +894,692 @@ glp-main: "glp_main" [
 #define LPX-C-ALL			255
 #define lpx-create-prob			_glp_lpx_create_prob
 #define lpx-set-prob-name			_glp_lpx_set_prob_name
-lpx-set-pr: "lpx_set_pr" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-prob-name: "lpx_set_prob_name" [
+	*lp	["LPX"]
+	*name	["char"]
+	return: 	[void!]
 ]
 #define lpx-set-obj-name			_glp_lpx_set_obj_name
-lpx-set-ob: "lpx_set_ob" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-obj-name: "lpx_set_obj_name" [
+	*lp	["LPX"]
+	*name	["char"]
+	return: 	[void!]
 ]
 #define lpx-set-obj-dir			_glp_lpx_set_obj_dir
-lpx-set-ob: "lpx_set_ob" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-obj-dir: "lpx_set_obj_dir" [
+	*lp	["LPX"]
+	dir	[integer!]
+	return: 	[void!]
 ]
 #define lpx-add-rows			_glp_lpx_add_rows
-lpx-add-ro: "lpx_add_ro" [
-	*lp	["LPX	return: 	[integer!]
+lpx-add-rows: "lpx_add_rows" [
+	*lp	["LPX"]
+	nrs	[integer!]
+	return: 	[integer!]
 ]
 #define lpx-add-cols			_glp_lpx_add_cols
-lpx-add-co: "lpx_add_co" [
-	*lp	["LPX	return: 	[integer!]
+lpx-add-cols: "lpx_add_cols" [
+	*lp	["LPX"]
+	ncs	[integer!]
+	return: 	[integer!]
 ]
 #define lpx-set-row-name			_glp_lpx_set_row_name
-lpx-set-ro: "lpx_set_ro" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-row-name: "lpx_set_row_name" [
+	*lp	["LPX"]
+	i	[integer!]
+	*name	["char"]
+	return: 	[void!]
 ]
 #define lpx-set-col-name			_glp_lpx_set_col_name
-lpx-set-co: "lpx_set_co" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-col-name: "lpx_set_col_name" [
+	*lp	["LPX"]
+	j	[integer!]
+	*name	["char"]
+	return: 	[void!]
 ]
 #define lpx-set-row-bnds			_glp_lpx_set_row_bnds
-lpx-set-ro: "lpx_set_ro" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-row-bnds: "lpx_set_row_bnds" [
+	*lp	["LPX"]
+	i	[integer!]
+	type	[integer!]
+	lb	[double!]
+	ub	[double!]
+	return: 	[void!]
 ]
 #define lpx-set-col-bnds			_glp_lpx_set_col_bnds
-lpx-set-co: "lpx_set_co" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-col-bnds: "lpx_set_col_bnds" [
+	*lp	["LPX"]
+	j	[integer!]
+	type	[integer!]
+	lb	[double!]
+	ub	[double!]
+	return: 	[void!]
 ]
 #define lpx-set-obj-coef			_glp_lpx_set_obj_coef
-lpx-set-ob: "lpx_set_ob" [
-	*lp	[glp_	return: 	[void!]
+lpx-set-obj-coef: "lpx_set_obj_coef" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	coef	[double!]
+	return: 	[void!]
 ]
 #define lpx-set-mat-row			_glp_lpx_set_mat_row
-lpx-set-ma: "lpx_set_ma" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-mat-row: "lpx_set_mat_row" [
+	*lp	["LPX"]
+	i	[integer!]
+	len	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[void!]
 ]
 #define lpx-set-mat-col			_glp_lpx_set_mat_col
-lpx-set-ma: "lpx_set_ma" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-mat-col: "lpx_set_mat_col" [
+	*lp	["LPX"]
+	j	[integer!]
+	len	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[void!]
 ]
 #define lpx-load-matrix			_glp_lpx_load_matrix
-lpx-load-m: "lpx_load_m" [
-	*lp	["LPX	return: 	[void!]
+lpx-load-matrix: "lpx_load_matrix" [
+	*lp	["LPX"]
+	ne	[integer!]
+	ia	[integer!]
+	ja	[integer!]
+	ar	[double!]
+	return: 	[void!]
 ]
 #define lpx-del-rows			_glp_lpx_del_rows
-lpx-del-ro: "lpx_del_ro" [
-	*lp	["LPX	return: 	[void!]
+lpx-del-rows: "lpx_del_rows" [
+	*lp	["LPX"]
+	nrs	[integer!]
+	num	[integer!]
+	return: 	[void!]
 ]
 #define lpx-del-cols			_glp_lpx_del_cols
-lpx-del-co: "lpx_del_co" [
-	*lp	["LPX	return: 	[void!]
+lpx-del-cols: "lpx_del_cols" [
+	*lp	["LPX"]
+	ncs	[integer!]
+	num	[integer!]
+	return: 	[void!]
 ]
 #define lpx-delete-prob			_glp_lpx_delete_prob
-lpx-delete: "lpx_delete" [
-	*lp	["LPX	return: 	[void!]
+lpx-delete-prob: "lpx_delete_prob" [
+	*lp	["LPX"]
+	return: 	[void!]
 ]
 #define lpx-get-prob-name			_glp_lpx_get_prob_name
-*lpx-get-p: "*lpx_get_p" [
-	*lp	["LPX	return: 	[char!]
+*lpx-get-prob-name: "*lpx_get_prob_name" [
+	*lp	["LPX"]
+	return: 	[char!]
 ]
 #define lpx-get-obj-name			_glp_lpx_get_obj_name
-*lpx-get-o: "*lpx_get_o" [
-	*lp	["LPX	return: 	[char!]
+*lpx-get-obj-name: "*lpx_get_obj_name" [
+	*lp	["LPX"]
+	return: 	[char!]
 ]
 #define lpx-get-obj-dir			_glp_lpx_get_obj_dir
-lpx-get-ob: "lpx_get_ob" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-obj-dir: "lpx_get_obj_dir" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-get-num-rows			_glp_lpx_get_num_rows
-lpx-get-nu: "lpx_get_nu" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-num-rows: "lpx_get_num_rows" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-get-num-cols			_glp_lpx_get_num_cols
-lpx-get-nu: "lpx_get_nu" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-num-cols: "lpx_get_num_cols" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-get-row-name			_glp_lpx_get_row_name
-*lpx-get-r: "*lpx_get_r" [
-	*lp	["LPX	return: 	[char!]
+*lpx-get-row-name: "*lpx_get_row_name" [
+	*lp	["LPX"]
+	i	[integer!]
+	return: 	[char!]
 ]
 #define lpx-get-col-name			_glp_lpx_get_col_name
-*lpx-get-c: "*lpx_get_c" [
-	*lp	["LPX	return: 	[char!]
+*lpx-get-col-name: "*lpx_get_col_name" [
+	*lp	["LPX"]
+	j	[integer!]
+	return: 	[char!]
 ]
 #define lpx-get-row-type			_glp_lpx_get_row_type
-lpx-get-ro: "lpx_get_ro" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-row-type: "lpx_get_row_type" [
+	*lp	["LPX"]
+	i	[integer!]
+	return: 	[integer!]
 ]
 #define lpx-get-row-lb			_glp_lpx_get_row_lb
-lpx-get-ro: "lpx_get_ro" [
-	*lp	["LPX	return: 	[double!]
+lpx-get-row-lb: "lpx_get_row_lb" [
+	*lp	["LPX"]
+	i	[integer!]
+	return: 	[double!]
 ]
 #define lpx-get-row-ub			_glp_lpx_get_row_ub
-lpx-get-ro: "lpx_get_ro" [
-	*lp	["LPX	return: 	[double!]
+lpx-get-row-ub: "lpx_get_row_ub" [
+	*lp	["LPX"]
+	i	[integer!]
+	return: 	[double!]
 ]
 #define lpx-get-row-bnds			_glp_lpx_get_row_bnds
-lpx-get-ro: "lpx_get_ro" [
-	*lp	["LPX	return: 	[void!]
+lpx-get-row-bnds: "lpx_get_row_bnds" [
+	*lp	["LPX"]
+	i	[integer!]
+	*typx	[integer!]
+	*lb	[double!]
+	*ub	[double!]
+	return: 	[void!]
 ]
 #define lpx-get-col-type			_glp_lpx_get_col_type
-lpx-get-co: "lpx_get_co" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-col-type: "lpx_get_col_type" [
+	*lp	["LPX"]
+	j	[integer!]
+	return: 	[integer!]
 ]
 #define lpx-get-col-lb			_glp_lpx_get_col_lb
-lpx-get-co: "lpx_get_co" [
-	*lp	["LPX	return: 	[double!]
+lpx-get-col-lb: "lpx_get_col_lb" [
+	*lp	["LPX"]
+	j	[integer!]
+	return: 	[double!]
 ]
 #define lpx-get-col-ub			_glp_lpx_get_col_ub
-lpx-get-co: "lpx_get_co" [
-	*lp	["LPX	return: 	[double!]
+lpx-get-col-ub: "lpx_get_col_ub" [
+	*lp	["LPX"]
+	j	[integer!]
+	return: 	[double!]
 ]
 #define lpx-get-col-bnds			_glp_lpx_get_col_bnds
-lpx-get-co: "lpx_get_co" [
-	*lp	["LPX	return: 	[void!]
+lpx-get-col-bnds: "lpx_get_col_bnds" [
+	*lp	["LPX"]
+	j	[integer!]
+	*typx	[integer!]
+	*lb	[double!]
+	*ub	[double!]
+	return: 	[void!]
 ]
 #define lpx-get-obj-coef			_glp_lpx_get_obj_coef
-lpx-get-ob: "lpx_get_ob" [
-	*lp	["LPX	return: 	[double!]
+lpx-get-obj-coef: "lpx_get_obj_coef" [
+	*lp	["LPX"]
+	j	[integer!]
+	return: 	[double!]
 ]
 #define lpx-get-num-nz			_glp_lpx_get_num_nz
-lpx-get-nu: "lpx_get_nu" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-num-nz: "lpx_get_num_nz" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-get-mat-row			_glp_lpx_get_mat_row
-lpx-get-ma: "lpx_get_ma" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-mat-row: "lpx_get_mat_row" [
+	*lp	["LPX"]
+	i	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[integer!]
 ]
 #define lpx-get-mat-col			_glp_lpx_get_mat_col
-lpx-get-ma: "lpx_get_ma" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-mat-col: "lpx_get_mat_col" [
+	*lp	["LPX"]
+	j	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[integer!]
 ]
 #define lpx-create-index			_glp_lpx_create_index
-lpx-create: "lpx_create" [
-	*lp	["LPX	return: 	[void!]
+lpx-create-index: "lpx_create_index" [
+	*lp	["LPX"]
+	return: 	[void!]
 ]
 #define lpx-find-row			_glp_lpx_find_row
-lpx-find-r: "lpx_find_r" [
-	*lp	["LPX	return: 	[integer!]
+lpx-find-row: "lpx_find_row" [
+	*lp	["LPX"]
+	*name	["char"]
+	return: 	[integer!]
 ]
 #define lpx-find-col			_glp_lpx_find_col
-lpx-find-c: "lpx_find_c" [
-	*lp	["LPX	return: 	[integer!]
+lpx-find-col: "lpx_find_col" [
+	*lp	["LPX"]
+	*name	["char"]
+	return: 	[integer!]
 ]
 #define lpx-delete-index			_glp_lpx_delete_index
-lpx-delete: "lpx_delete" [
-	*lp	["LPX	return: 	[void!]
+lpx-delete-index: "lpx_delete_index" [
+	*lp	["LPX"]
+	return: 	[void!]
 ]
 #define lpx-scale-prob			_glp_lpx_scale_prob
-lpx-scale-: "lpx_scale_" [
-	*lp	["LPX	return: 	[void!]
+lpx-scale-prob: "lpx_scale_prob" [
+	*lp	["LPX"]
+	return: 	[void!]
 ]
 #define lpx-unscale-prob			_glp_lpx_unscale_prob
-lpx-unscal: "lpx_unscal" [
-	*lp	["LPX	return: 	[void!]
+lpx-unscale-prob: "lpx_unscale_prob" [
+	*lp	["LPX"]
+	return: 	[void!]
 ]
 #define lpx-set-row-stat			_glp_lpx_set_row_stat
-lpx-set-ro: "lpx_set_ro" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-row-stat: "lpx_set_row_stat" [
+	*lp	["LPX"]
+	i	[integer!]
+	stat	[integer!]
+	return: 	[void!]
 ]
 #define lpx-set-col-stat			_glp_lpx_set_col_stat
-lpx-set-co: "lpx_set_co" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-col-stat: "lpx_set_col_stat" [
+	*lp	["LPX"]
+	j	[integer!]
+	stat	[integer!]
+	return: 	[void!]
 ]
 #define lpx-std-basis			_glp_lpx_std_basis
-lpx-std-ba: "lpx_std_ba" [
-	*lp	["LPX	return: 	[void!]
+lpx-std-basis: "lpx_std_basis" [
+	*lp	["LPX"]
+	return: 	[void!]
 ]
 #define lpx-adv-basis			_glp_lpx_adv_basis
-lpx-adv-ba: "lpx_adv_ba" [
-	*lp	["LPX	return: 	[void!]
+lpx-adv-basis: "lpx_adv_basis" [
+	*lp	["LPX"]
+	return: 	[void!]
 ]
 #define lpx-cpx-basis			_glp_lpx_cpx_basis
-lpx-cpx-ba: "lpx_cpx_ba" [
-	*lp	["LPX	return: 	[void!]
+lpx-cpx-basis: "lpx_cpx_basis" [
+	*lp	["LPX"]
+	return: 	[void!]
 ]
 #define lpx-simplex			_glp_lpx_simplex
-lpx-simple: "lpx_simple" [
-	*lp	["LPX	return: 	[integer!]
+lpx-simplex: "lpx_simplex" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-exact			_glp_lpx_exact
 lpx-exact: "lpx_exact" [
-	*lp	["LPX	return: 	[integer!]
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-get-status			_glp_lpx_get_status
-lpx-get-st: "lpx_get_st" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-status: "lpx_get_status" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-get-prim-stat			_glp_lpx_get_prim_stat
-lpx-get-pr: "lpx_get_pr" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-prim-stat: "lpx_get_prim_stat" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-get-dual-stat			_glp_lpx_get_dual_stat
-lpx-get-du: "lpx_get_du" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-dual-stat: "lpx_get_dual_stat" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-get-obj-val			_glp_lpx_get_obj_val
-lpx-get-ob: "lpx_get_ob" [
-	*lp	["LPX	return: 	[double!]
+lpx-get-obj-val: "lpx_get_obj_val" [
+	*lp	["LPX"]
+	return: 	[double!]
 ]
 #define lpx-get-row-stat			_glp_lpx_get_row_stat
-lpx-get-ro: "lpx_get_ro" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-row-stat: "lpx_get_row_stat" [
+	*lp	["LPX"]
+	i	[integer!]
+	return: 	[integer!]
 ]
 #define lpx-get-row-prim			_glp_lpx_get_row_prim
-lpx-get-ro: "lpx_get_ro" [
-	*lp	["LPX	return: 	[double!]
+lpx-get-row-prim: "lpx_get_row_prim" [
+	*lp	["LPX"]
+	i	[integer!]
+	return: 	[double!]
 ]
 #define lpx-get-row-dual			_glp_lpx_get_row_dual
-lpx-get-ro: "lpx_get_ro" [
-	*lp	["LPX	return: 	[double!]
+lpx-get-row-dual: "lpx_get_row_dual" [
+	*lp	["LPX"]
+	i	[integer!]
+	return: 	[double!]
 ]
 #define lpx-get-row-info			_glp_lpx_get_row_info
-lpx-get-ro: "lpx_get_ro" [
-	*lp	["LPX	return: 	[void!]
+lpx-get-row-info: "lpx_get_row_info" [
+	*lp	["LPX"]
+	i	[integer!]
+	*tagx	[integer!]
+	*vx	[double!]
+	*dx	[double!]
+	return: 	[void!]
 ]
 #define lpx-get-col-stat			_glp_lpx_get_col_stat
-lpx-get-co: "lpx_get_co" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-col-stat: "lpx_get_col_stat" [
+	*lp	["LPX"]
+	j	[integer!]
+	return: 	[integer!]
 ]
 #define lpx-get-col-prim			_glp_lpx_get_col_prim
-lpx-get-co: "lpx_get_co" [
-	*lp	["LPX	return: 	[double!]
+lpx-get-col-prim: "lpx_get_col_prim" [
+	*lp	["LPX"]
+	j	[integer!]
+	return: 	[double!]
 ]
 #define lpx-get-col-dual			_glp_lpx_get_col_dual
-lpx-get-co: "lpx_get_co" [
-	*lp	[glp_	return: 	[double!]
+lpx-get-col-dual: "lpx_get_col_dual" [
+	*lp	[glp_prob!]
+	j	[integer!]
+	return: 	[double!]
 ]
 #define lpx-get-col-info			_glp_lpx_get_col_info
-lpx-get-co: "lpx_get_co" [
-	*lp	["LPX	return: 	[void!]
+lpx-get-col-info: "lpx_get_col_info" [
+	*lp	["LPX"]
+	j	[integer!]
+	*tagx	[integer!]
+	*vx	[double!]
+	*dx	[double!]
+	return: 	[void!]
 ]
 #define lpx-get-ray-info			_glp_lpx_get_ray_info
-lpx-get-ra: "lpx_get_ra" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-ray-info: "lpx_get_ray_info" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-check-kkt			_glp_lpx_check_kkt
-lpx-check-: "lpx_check_" [
-	*lp	["LPX	return: 	[void!]
+lpx-check-kkt: "lpx_check_kkt" [
+	*lp	["LPX"]
+	scaled	[integer!]
+	*kkt	["LPXKKT"]
+	return: 	[void!]
 ]
 #define lpx-warm-up			_glp_lpx_warm_up
-lpx-warm-u: "lpx_warm_u" [
-	*lp	["LPX	return: 	[integer!]
+lpx-warm-up: "lpx_warm_up" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-eval-tab-row			_glp_lpx_eval_tab_row
-lpx-eval-t: "lpx_eval_t" [
-	*lp	["LPX	return: 	[integer!]
+lpx-eval-tab-row: "lpx_eval_tab_row" [
+	*lp	["LPX"]
+	k	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[integer!]
 ]
 #define lpx-eval-tab-col			_glp_lpx_eval_tab_col
-lpx-eval-t: "lpx_eval_t" [
-	*lp	["LPX	return: 	[integer!]
+lpx-eval-tab-col: "lpx_eval_tab_col" [
+	*lp	["LPX"]
+	k	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[integer!]
 ]
 #define lpx-transform-row			_glp_lpx_transform_row
-lpx-transf: "lpx_transf" [
-	*lp	["LPX	return: 	[integer!]
+lpx-transform-row: "lpx_transform_row" [
+	*lp	["LPX"]
+	len	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[integer!]
 ]
 #define lpx-transform-col			_glp_lpx_transform_col
-lpx-transf: "lpx_transf" [
-	*lp	["LPX	return: 	[integer!]
+lpx-transform-col: "lpx_transform_col" [
+	*lp	["LPX"]
+	len	[integer!]
+	ind	[integer!]
+	val	[double!]
+	return: 	[integer!]
 ]
 #define lpx-prim-ratio-test			_glp_lpx_prim_ratio_test
-lpx-prim-r: "lpx_prim_r" [
-	*lp	["LPX	return: 	[integer!]
+lpx-prim-ratio-test: "lpx_prim_ratio_test" [
+	*lp	["LPX"]
+	len	[integer!]
+	ind	[integer!]
+	val	[double!]
+	how	[integer!]
+	tol	[double!]
+	return: 	[integer!]
 ]
 #define lpx-dual-ratio-test			_glp_lpx_dual_ratio_test
-lpx-dual-r: "lpx_dual_r" [
-	*lp	["LPX	return: 	[integer!]
+lpx-dual-ratio-test: "lpx_dual_ratio_test" [
+	*lp	["LPX"]
+	len	[integer!]
+	ind	[integer!]
+	val	[double!]
+	how	[integer!]
+	tol	[double!]
+	return: 	[integer!]
 ]
 #define lpx-interior			_glp_lpx_interior
-lpx-interi: "lpx_interi" [
-	*lp	["LPX	return: 	[integer!]
+lpx-interior: "lpx_interior" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-ipt-status			_glp_lpx_ipt_status
-lpx-ipt-st: "lpx_ipt_st" [
-	*lp	["LPX	return: 	[integer!]
+lpx-ipt-status: "lpx_ipt_status" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-ipt-obj-val			_glp_lpx_ipt_obj_val
-lpx-ipt-ob: "lpx_ipt_ob" [
-	*lp	["LPX	return: 	[double!]
+lpx-ipt-obj-val: "lpx_ipt_obj_val" [
+	*lp	["LPX"]
+	return: 	[double!]
 ]
 #define lpx-ipt-row-prim			_glp_lpx_ipt_row_prim
-lpx-ipt-ro: "lpx_ipt_ro" [
-	*lp	["LPX	return: 	[double!]
+lpx-ipt-row-prim: "lpx_ipt_row_prim" [
+	*lp	["LPX"]
+	i	[integer!]
+	return: 	[double!]
 ]
 #define lpx-ipt-row-dual			_glp_lpx_ipt_row_dual
-lpx-ipt-ro: "lpx_ipt_ro" [
-	*lp	["LPX	return: 	[double!]
+lpx-ipt-row-dual: "lpx_ipt_row_dual" [
+	*lp	["LPX"]
+	i	[integer!]
+	return: 	[double!]
 ]
 #define lpx-ipt-col-prim			_glp_lpx_ipt_col_prim
-lpx-ipt-co: "lpx_ipt_co" [
-	*lp	["LPX	return: 	[double!]
+lpx-ipt-col-prim: "lpx_ipt_col_prim" [
+	*lp	["LPX"]
+	j	[integer!]
+	return: 	[double!]
 ]
 #define lpx-ipt-col-dual			_glp_lpx_ipt_col_dual
-lpx-ipt-co: "lpx_ipt_co" [
-	*lp	["LPX	return: 	[double!]
+lpx-ipt-col-dual: "lpx_ipt_col_dual" [
+	*lp	["LPX"]
+	j	[integer!]
+	return: 	[double!]
 ]
 #define lpx-set-class			_glp_lpx_set_class
-lpx-set-cl: "lpx_set_cl" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-class: "lpx_set_class" [
+	*lp	["LPX"]
+	klass	[integer!]
+	return: 	[void!]
 ]
 #define lpx-get-class			_glp_lpx_get_class
-lpx-get-cl: "lpx_get_cl" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-class: "lpx_get_class" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-set-col-kind			_glp_lpx_set_col_kind
-lpx-set-co: "lpx_set_co" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-col-kind: "lpx_set_col_kind" [
+	*lp	["LPX"]
+	j	[integer!]
+	kind	[integer!]
+	return: 	[void!]
 ]
 #define lpx-get-col-kind			_glp_lpx_get_col_kind
-lpx-get-co: "lpx_get_co" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-col-kind: "lpx_get_col_kind" [
+	*lp	["LPX"]
+	j	[integer!]
+	return: 	[integer!]
 ]
 #define lpx-get-num-int			_glp_lpx_get_num_int
-lpx-get-nu: "lpx_get_nu" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-num-int: "lpx_get_num_int" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-get-num-bin			_glp_lpx_get_num_bin
-lpx-get-nu: "lpx_get_nu" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-num-bin: "lpx_get_num_bin" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-integer			_glp_lpx_integer
-lpx-intege: "lpx_intege" [
-	*lp	["LPX	return: 	[integer!]
+lpx-integer: "lpx_integer" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-intopt			_glp_lpx_intopt
 lpx-intopt: "lpx_intopt" [
-	*lp	["LPX	return: 	[integer!]
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-mip-status			_glp_lpx_mip_status
-lpx-mip-st: "lpx_mip_st" [
-	*lp	["LPX	return: 	[integer!]
+lpx-mip-status: "lpx_mip_status" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-mip-obj-val			_glp_lpx_mip_obj_val
-lpx-mip-ob: "lpx_mip_ob" [
-	*lp	["LPX	return: 	[double!]
+lpx-mip-obj-val: "lpx_mip_obj_val" [
+	*lp	["LPX"]
+	return: 	[double!]
 ]
 #define lpx-mip-row-val			_glp_lpx_mip_row_val
-lpx-mip-ro: "lpx_mip_ro" [
-	*lp	["LPX	return: 	[double!]
+lpx-mip-row-val: "lpx_mip_row_val" [
+	*lp	["LPX"]
+	i	[integer!]
+	return: 	[double!]
 ]
 #define lpx-mip-col-val			_glp_lpx_mip_col_val
-lpx-mip-co: "lpx_mip_co" [
-	*lp	["LPX	return: 	[double!]
+lpx-mip-col-val: "lpx_mip_col_val" [
+	*lp	["LPX"]
+	j	[integer!]
+	return: 	[double!]
 ]
 #define lpx-check-int			_glp_lpx_check_int
-lpx-check-: "lpx_check_" [
-	*lp	["LPX	return: 	[void!]
+lpx-check-int: "lpx_check_int" [
+	*lp	["LPX"]
+	*kkt	["LPXKKT"]
+	return: 	[void!]
 ]
 #define lpx-reset-parms			_glp_lpx_reset_parms
-lpx-reset-: "lpx_reset_" [
-	*lp	["LPX	return: 	[void!]
+lpx-reset-parms: "lpx_reset_parms" [
+	*lp	["LPX"]
+	return: 	[void!]
 ]
 #define lpx-set-int-parm			_glp_lpx_set_int_parm
-lpx-set-in: "lpx_set_in" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-int-parm: "lpx_set_int_parm" [
+	*lp	["LPX"]
+	parm	[integer!]
+	val	[integer!]
+	return: 	[void!]
 ]
 #define lpx-get-int-parm			_glp_lpx_get_int_parm
-lpx-get-in: "lpx_get_in" [
-	*lp	["LPX	return: 	[integer!]
+lpx-get-int-parm: "lpx_get_int_parm" [
+	*lp	["LPX"]
+	parm	[integer!]
+	return: 	[integer!]
 ]
 #define lpx-set-real-parm			_glp_lpx_set_real_parm
-lpx-set-re: "lpx_set_re" [
-	*lp	["LPX	return: 	[void!]
+lpx-set-real-parm: "lpx_set_real_parm" [
+	*lp	["LPX"]
+	parm	[integer!]
+	val	[double!]
+	return: 	[void!]
 ]
 #define lpx-get-real-parm			_glp_lpx_get_real_parm
-lpx-get-re: "lpx_get_re" [
-	*lp	["LPX	return: 	[double!]
+lpx-get-real-parm: "lpx_get_real_parm" [
+	*lp	["LPX"]
+	parm	[integer!]
+	return: 	[double!]
 ]
 #define lpx-read-mps			_glp_lpx_read_mps
-*lpx-read-: "*lpx_read_" [
-	*fname	["	return: 	["LPX"]
+*lpx-read-mps: "*lpx_read_mps" [
+	*fname	["char"]
+	return: 	["LPX"]
 ]
 #define lpx-write-mps			_glp_lpx_write_mps
-lpx-write-: "lpx_write_" [
-	*lp	["LPX	return: 	[integer!]
+lpx-write-mps: "lpx_write_mps" [
+	*lp	["LPX"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
 #define lpx-read-bas			_glp_lpx_read_bas
-lpx-read-b: "lpx_read_b" [
-	*lp	["LPX	return: 	[integer!]
+lpx-read-bas: "lpx_read_bas" [
+	*lp	["LPX"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
 #define lpx-write-bas			_glp_lpx_write_bas
-lpx-write-: "lpx_write_" [
-	*lp	["LPX	return: 	[integer!]
+lpx-write-bas: "lpx_write_bas" [
+	*lp	["LPX"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
 #define lpx-read-freemps			_glp_lpx_read_freemps
-*lpx-read-: "*lpx_read_" [
-	*fname	["	return: 	["LPX"]
+*lpx-read-freemps: "*lpx_read_freemps" [
+	*fname	["char"]
+	return: 	["LPX"]
 ]
 #define lpx-write-freemps			_glp_lpx_write_freemps
-lpx-write-: "lpx_write_" [
-	*lp	["LPX	return: 	[integer!]
+lpx-write-freemps: "lpx_write_freemps" [
+	*lp	["LPX"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
 #define lpx-read-cpxlp			_glp_lpx_read_cpxlp
-*lpx-read-: "*lpx_read_" [
-	*fname	["	return: 	["LPX"]
+*lpx-read-cpxlp: "*lpx_read_cpxlp" [
+	*fname	["char"]
+	return: 	["LPX"]
 ]
 #define lpx-write-cpxlp			_glp_lpx_write_cpxlp
-lpx-write-: "lpx_write_" [
-	*lp	["LPX	return: 	[integer!]
+lpx-write-cpxlp: "lpx_write_cpxlp" [
+	*lp	["LPX"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
 #define lpx-read-model			_glp_lpx_read_model
-*lpx-read-: "*lpx_read_" [
-	*model	["	return: 	["LPX"]
+*lpx-read-model: "*lpx_read_model" [
+	*model	["char"]
+	*data	["char"]
+	*output	["char"]
+	return: 	["LPX"]
 ]
 #define lpx-print-prob			_glp_lpx_print_prob
-lpx-print-: "lpx_print_" [
-	*lp	["LPX	return: 	[integer!]
+lpx-print-prob: "lpx_print_prob" [
+	*lp	["LPX"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
 #define lpx-print-sol			_glp_lpx_print_sol
-lpx-print-: "lpx_print_" [
-	*lp	["LPX	return: 	[integer!]
+lpx-print-sol: "lpx_print_sol" [
+	*lp	["LPX"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
 #define lpx-print-sens-bnds			_glp_lpx_print_sens_bnds
-lpx-print-: "lpx_print_" [
-	*lp	["LPX	return: 	[integer!]
+lpx-print-sens-bnds: "lpx_print_sens_bnds" [
+	*lp	["LPX"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
 #define lpx-print-ips			_glp_lpx_print_ips
-lpx-print-: "lpx_print_" [
-	*lp	["LPX	return: 	[integer!]
+lpx-print-ips: "lpx_print_ips" [
+	*lp	["LPX"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
 #define lpx-print-mip			_glp_lpx_print_mip
-lpx-print-: "lpx_print_" [
-	*lp	["LPX	return: 	[integer!]
+lpx-print-mip: "lpx_print_mip" [
+	*lp	["LPX"]
+	*fname	["char"]
+	return: 	[integer!]
 ]
 #define lpx-is-b-avail			_glp_lpx_is_b_avail
-lpx-is-b-a: "lpx_is_b_a" [
-	*lp	["LPX	return: 	[integer!]
+lpx-is-b-avail: "lpx_is_b_avail" [
+	*lp	["LPX"]
+	return: 	[integer!]
 ]
 #define lpx-write-pb			_glp_lpx_write_pb
-lpx-write-: "lpx_write_" [
-	*lp	["LPX	return: 	[integer!]
+lpx-write-pb: "lpx_write_pb" [
+	*lp	["LPX"]
+	*fname	["char"]
+	normalized	[integer!]
+	binarize	[integer!]
+	return: 	[integer!]
 ]
 #define lpx-main			_glp_lpx_main
 lpx-main: "lpx_main" [
-	argc	[int	return: 	[integer!]
+	argc	[integer!]
+	*argv	["char"]
+	return: 	[integer!]
 ]
