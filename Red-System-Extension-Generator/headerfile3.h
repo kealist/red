@@ -2,13 +2,15 @@
 
 
 
+#define _GLPK_H
 
-
+extern "C" {
 
 #define GLP_MAJOR_VERSION  4
 #define GLP_MINOR_VERSION  34
 
-
+#define _GLP_PROB
+typedef struct { double _opaque_prob; } glp_prob;
 
 
 #define GLP_MIN            1  
@@ -56,8 +58,8 @@
 typedef struct { int lo, hi; } glp_long;
 
 
-
-
+#define _GLP_BFCP
+typedef struct glp_bfcp glp_bfcp;
 struct glp_bfcp
 {     
       int msg_lev;            
@@ -109,7 +111,8 @@ typedef struct
       double foo_bar[36];     
 } glp_smcp;
 
-
+#define _GLP_TREE
+typedef struct { double _opaque_tree; } glp_tree;
 
 typedef struct
 {     
@@ -153,8 +156,6 @@ typedef struct
       double foo_bar[30];     
 #if 1 
       char *fn_sol;           
-#endif
-} glp_iocp;
 
 typedef struct
 {     
@@ -216,7 +217,8 @@ typedef struct
 #define GLP_MPS_DECK       1  
 #define GLP_MPS_FILE       2  
 
-
+#define _GLP_TRAN
+typedef struct { double _opaque_tran; } glp_tran;
 
 glp_prob *glp_create_prob(void);
 
@@ -1299,8 +1301,5 @@ int lpx_write_pb(LPX *lp, const char *fname, int normalized,
 int lpx_main(int argc, const char *argv[]);
 
 
-
-
-#endif
-
+}
 
