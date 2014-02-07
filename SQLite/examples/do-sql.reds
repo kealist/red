@@ -7,7 +7,6 @@ Red/System [
 		http://creativecommons.org/publicdomain/zero/1.0/
 	}
 	Needs: {
-		Red/System >= 0.3.0
 		%C-library/ANSI.reds
 		%SQLite.reds
 	}
@@ -16,8 +15,9 @@ Red/System [
 		introductory documentation:
 		http://sqlite.org/quickstart.html
 	}
-	Example:
-		{do-sql database.sqlite "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"}
+	Example: {
+		do-sql database.sqlite "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
+	}
 	Tabs:		4
 ]
 

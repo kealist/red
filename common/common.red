@@ -1,7 +1,7 @@
 Red [
 	Title:		"Common Definitions"
 	Author:		"Kaj de Vos"
-	Rights:		"Copyright (c) 2013 Kaj de Vos. All rights reserved."
+	Rights:		"Copyright (c) 2013,2014 Kaj de Vos. All rights reserved."
 	License: {
 		Redistribution and use in source and binary forms, with or without modification,
 		are permitted provided that the following conditions are met:
@@ -27,6 +27,9 @@ Red [
 		Red >= 0.4.1
 		%C-library/ANSI.reds
 	}
+	Notes: {
+		Needs to be compiled. Current Red interpreter can't properly LOAD the script.
+	}
 	Tabs:		4
 ]
 
@@ -37,7 +40,8 @@ Red [
 ; Buffer working space
 
 ; WARN: not thread safe
-_string: ""
+_string: make string! 0
+_block: make block! 0
 _item: make block! 1
 
 
@@ -94,9 +98,14 @@ get-arguments: function ["Return program arguments, excluding program name."
 
 ; PARSE rules
 
-blank:		charset " ^-^/^M"
-digit:		charset "0123456789"
-non-zero:	charset "123456789"
+blank:			charset " ^(tab)^(line)^M^(page)"
+
+letter:			charset [#"A" - #"Z"  #"a" - #"z"]
+
+digit:			charset "0123456789"
+non-zero:		charset "123456789"
+octal:			charset "01234567"
+hexadecimal:	union digit charset [#"A" - #"F"  #"a" - #"f"]
 
 
 ; Common functions

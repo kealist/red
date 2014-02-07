@@ -1,7 +1,7 @@
 Red [
 	Title:		"Red Console"
 	Author:		["Nenad Rakocevic" "Kaj de Vos"]
-	Rights:		"Copyright (c) 2012-2013 Nenad Rakocevic. All rights reserved."
+	Rights:		"Copyright (c) 2012-2014 Nenad Rakocevic. All rights reserved."
 	License: {
 		Distributed under the Boost Software License, Version 1.0.
 		See https://github.com/dockimbel/Red/blob/master/BSL-License.txt
@@ -20,20 +20,8 @@ Red [
 		Windows [
 			#import [
 				"kernel32.dll" stdcall [
-					AttachConsole: "AttachConsole" [
-						processID		[integer!]
-						return:			[integer!]
-					]
 					SetConsoleTitle: "SetConsoleTitleA" [
 						title			[c-string!]
-						return:			[integer!]
-					]
-					ReadConsole: "ReadConsoleA" [
-						consoleInput	[integer!]
-						buffer			[byte-ptr!]
-						charsToRead		[integer!]
-						numberOfChars	[int-ptr!]
-						inputControl	[int-ptr!]
 						return:			[integer!]
 					]
 				]
@@ -90,11 +78,8 @@ begin-console: routine [
 	#switch OS [
 		Android []
 		Windows [
-			;if zero? AttachConsole -1 [print-line "AttachConsole failed!"  halt]
-
 			if zero? SetConsoleTitle as-c-string string/rs-head title [
 				print-line "SetConsoleTitle failed."
-				;halt
 			]
 		]
 		#default [
@@ -106,54 +91,38 @@ begin-console: routine [
 input-line: routine [
 	prompt		[string!]
 ;	return:		[string! none!]
-	/local
-		line
-		buffer size
+	/local		line
 ][
 	#switch OS [
-		Windows [
-			prin as-c-string string/rs-head prompt
-
-			size: 0
-			buffer: allocate 80h
-
-			either none? buffer [
-				print-line "Failed to allocate input memory!"
-				RETURN_NONE
-			][
-				either all [
-					as-logic ReadConsole stdin buffer 127 :size null
-					size >= 2
-				][
-					size: size - 1  ; Remove CR/LF
-					buffer/size: null-byte
-					SET_RETURN ((string/load as-c-string buffer  size))
-;					free buffer
-				][	; EOF or error
-					free buffer
-					RETURN_NONE
-				]
-			]
-		]
 		Android [
 			line: ask as-c-string string/rs-head prompt
 
-			either none? line [
+			either none? line [  ; EOF or error
 				RETURN_NONE
-			][	; EOF or error
-				SET_RETURN ((string/load line  1 + length? line))
+			][
+				SET_RETURN ((string/load line  (length? line) + 1))
+;				free-any line
+			]
+		]
+		Windows [
+			line: ask as-c-string string/rs-head prompt
+
+			either none? line [  ; EOF or error
+				RETURN_NONE
+			][
+				SET_RETURN ((string/load line  (length? line) + 1))
 ;				free-any line
 			]
 		]
 		#default [
 			line: read-console as-c-string string/rs-head prompt
 
-			either none? line [
+			either none? line [  ; EOF
 				RETURN_NONE
-			][	; EOF
+			][
 				#if OS <> 'MacOSX [add-history line]
 
-				SET_RETURN ((string/load line  1 + length? line))
+				SET_RETURN ((string/load line  (length? line) + 1))
 ;				free-any line
 			]
 		]
@@ -178,7 +147,7 @@ q: :quit
 
 halt?: yes
 
-halt: does [
+halt: does [  ; FIXME #626: HALT conflicts with internal definition
 	halt?: yes
 	()
 ]
@@ -204,7 +173,7 @@ do-console: function [] [
 (only ASCII input supported)
 }
 
-		buffer: make string! 10'000
+		buffer: make string! 1000
 		escape?: literal?: no  ; string! or char!
 		strings: blocks: parens: 0
 
@@ -252,9 +221,9 @@ about: does [
 		"Red" system/version newline
 		"Platform:" system/platform {
 
-Copyright (c) 2011-2013 Nenad Rakocevic and contributors. All rights reserved.
+Copyright (c) 2011-2014 Nenad Rakocevic and contributors. All rights reserved.
 Licensed under the Boost Software License, Version 1.0.
-Copyright (c) 2011-2013 Kaj de Vos. All rights reserved.
+Copyright (c) 2011-2014 Kaj de Vos. All rights reserved.
 Licensed under the BSD license.
 
 Use LICENSE for full license text.
@@ -263,7 +232,7 @@ Use LICENSE for full license text.
 ]
 license: does [
 	print
-{Copyright (c) 2011-2013 Nenad Rakocevic and contributors. All rights reserved.
+{Copyright (c) 2011-2014 Nenad Rakocevic and contributors. All rights reserved.
 Boost Software License - Version 1.0 - August 17th, 2003
 
 Permission is hereby granted, free of charge, to any person or organization
@@ -289,7 +258,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 
-Copyright (c) 2011-2013 Kaj de Vos. All rights reserved.
+Copyright (c) 2011-2014 Kaj de Vos. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

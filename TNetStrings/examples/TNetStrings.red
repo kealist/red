@@ -25,5 +25,8 @@ probe load-TNetString/values	{6:#issue,5:%file,8:"string",}
 print to-TNetString				context [a: 9 b: 42]
 print to-TNetString/map			[a 9  b 42]
 probe load-TNetString			"17:1:a,1:9#1:b,2:42#}"
-probe load-TNetString/objects	"17:1:a,1:9#1:b,2:42#}"
 probe load-TNetString/keys		"17:1:a,1:9#1:b,2:42#}"
+probe load-TNetString/objects	"17:1:a,1:9#1:b,2:42#}"
+print to-TNetString				s: charset [#"0" - #"9"]
+print to-TNetString				complement s
+print to-TNetString				charset [100 1000]

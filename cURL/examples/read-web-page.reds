@@ -23,20 +23,20 @@ Red/System [
 argument: get-argument 1
 text: as-c-string 0
 
-either as-logic argument [
-	text: read-url argument
-
-	either as-logic text [
-		print-line text
-		free-any text
-	][
-		print-line "Failed to read URL"
-	]
-][
+either none? argument [
 	argument: get-argument 0
 	print-line [
 		"Usage: " argument " <URL>" newline
 		"cURL version: " curl/version
+	]
+][
+	text: read-url argument
+
+	either none? text [
+		print-line "Failed to read URL"
+	][
+		print-line text
+		free-any text
 	]
 ]
 end-argument argument

@@ -1,7 +1,7 @@
 Red/System [
 	Title:		"PeterPaint SDL example"
 	Author:		"Kaj de Vos"
-	Rights:		"Copyright (c) 2011-2014 Kaj de Vos"
+	Rights:		"Copyright (c) 2011-2013 Kaj de Vos"
 	License: {
 		PD/CC0
 		http://creativecommons.org/publicdomain/zero/1.0/
@@ -64,24 +64,17 @@ with sdl [
 	either begin with-video [
 		screen: set-video-mode 640 480  32  software-surface
 
-		either null? screen [
-			log-error
-		][
+		either as-logic screen [
 			; If a program parameter is given, load it as a BitMaP file
 
 			if as-logic argument [
-;				file: open-read-binary argument  ; FIXME
-				file: open argument "rb"
+				file: open-read-binary argument
 				end-argument argument
 
-				either null? file [
-					log-error
-				][
+				either as-logic file [
 					image: load-bmp file yes
 
-					either null? image [
-						log-error
-					][
+					either as-logic image [
 						; Squash two 16 bits values in 32 bits space
 						rectangle/x-y: 10 << 16 or 20
 						rectangle/width-height: image/height << 16 or image/width
@@ -92,7 +85,11 @@ with sdl [
 							log-error
 						]
 						free-surface image
+					][
+						log-error
 					]
+				][
+					log-error
 				]
 			]
 
@@ -120,6 +117,8 @@ with sdl [
 					]
 				]
 			]
+		][
+			log-error
 		]
 
 		end

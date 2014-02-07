@@ -1,7 +1,7 @@
 Red/System [
 	Title:		"Play a WAV sound file"
 	Author:		"Kaj de Vos"
-	Rights:		"Copyright (c) 2011-2014 Kaj de Vos"
+	Rights:		"Copyright (c) 2011-2013 Kaj de Vos"
 	License: {
 		PD/CC0
 		http://creativecommons.org/publicdomain/zero/1.0/
@@ -42,10 +42,7 @@ with sdl [
 	conversion:	declare audio-conversion!
 	stream:		declare stream!
 
-	either null? argument [
-		argument: get-argument 0
-		print-wide ["Usage:" argument "<WAV file>" newline]
-	][
+	either as-logic argument [
 		; Open audio output in the preferred format and get the actual hardware format
 
 		either begin with-audio
@@ -63,20 +60,15 @@ with sdl [
 			#if OS = 'Windows [  ; DirectSound needs a window handle
 				screen: set-video-mode 1 1  0  no-frame
 
-				if null? screen [log-error]
+				unless as-logic screen [log-error]
 			]
 			either open-audio wanted actual [
 				; Load the audio file
 
-;				file: open-read-binary argument  ; FIXME
-				file: open argument "rb"
+				file: open-read-binary argument
 
-				either null? file [
-					log-error
-				][
-					either null? load-wav file yes sound data :size [
-						log-error
-					][
+				either as-logic file [
+					either as-logic load-wav file yes sound data :size [
 						; Convert audio to the hardware format
 
 						either make-audio-conversion conversion
@@ -89,9 +81,7 @@ with sdl [
 						[
 							conversion/data: allocate conversion/size-multiple * size
 
-							either null? conversion/data [
-								print-line "Error: sound conversion memory allocation failed"
-							][
+							either as-logic conversion/data [
 								copy-part data/value conversion/data size
 								conversion/source-size: size
 
@@ -111,12 +101,18 @@ with sdl [
 									log-error
 								]
 								free conversion/data
+							][
+								print-line "Error: sound conversion memory allocation failed"
 							]
 						][
 							log-error
 						]
 						free-wav data/value
+					][
+						log-error
 					]
+				][
+					log-error
 				]
 				close-audio
 			][
@@ -126,6 +122,9 @@ with sdl [
 		][
 			log-error
 		]
+	][
+		argument: get-argument 0
+		print-wide ["Usage:" argument "<WAV file>" newline]
 	]
 	end-argument argument
 

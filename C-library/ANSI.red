@@ -1,7 +1,7 @@
 Red [
 	Title:		"ANSI C Library Binding"
 	Author:		"Kaj de Vos"
-	Rights:		"Copyright (c) 2011-2013 Kaj de Vos. All rights reserved."
+	Rights:		"Copyright (c) 2011-2014 Kaj de Vos. All rights reserved."
 	License: {
 		Redistribution and use in source and binary forms, with or without modification,
 		are permitted provided that the following conditions are met:
@@ -69,6 +69,22 @@ load-hex: routine ["Return integer parsed from hexadecimal string."
 		RETURN_NONE
 	]
 ]
+load-octal: routine ["Return integer parsed from octal string."
+	string			[string!]
+;	return:			[integer! none!]
+	/local text result ok?
+][
+	text: to-UTF8 string
+	result: 0
+	ok?: parse-octal text :result
+	free-any text
+
+	either ok? [
+		integer/box result
+	][
+		RETURN_NONE
+	]
+]
 
 
 ; Formatting
@@ -114,10 +130,10 @@ input: routine ["Return a line read from standard input."
 	]
 ]
 ask: function ["Prompt for input, then return a line read from standard input."
-	prompt			[string!]
+	question		[string!]
 	return:			[string! none!]
 ][
-	prin prompt
+	prin question
 	input
 ]
 

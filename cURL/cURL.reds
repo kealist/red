@@ -241,13 +241,13 @@ curl: context [
 		if as-logic session [  ; TODO?: report curl-error-out-of-memory
 			session/handle: _make-session
 
-			either as-logic session/handle [
+			either none? session/handle [
+				free-any session
+				return null
+			][
 				; For safety
 				session/data: null
 				session/index: 0
-			][
-				free-any session
-				return null
 			]
 		]
 		session
@@ -278,11 +278,11 @@ curl: context [
 		if size > rest [  ; Need to expand data storage
 			data: resize session/data  index + size
 
-			either as-logic data [  ; Expansion succeeded
+			either none? data [
+				size: rest
+			][	; Expansion succeeded
 				session/data: data
 				session/size: index + size
-			][
-				size: rest
 			]
 		]
 		copy-part buffer  session/data + index  size
@@ -394,11 +394,11 @@ curl: context [
 				if zero? status [
 					file: open-new name
 
-					status: either as-logic file [  ; Would segfault without this check
+					status: either none? file [  ; Would segfault without this check
+						error-write  ; TODO: report real file error
+					][
 						session/file: file
 						set handle set-write-data  as variant! file
-					][
-						error-write  ; TODO: report real file error
 					]
 				]
 			]
@@ -426,11 +426,11 @@ curl: context [
 					if zero? status [
 						file: open-read name
 
-						status: either as-logic file [  ; Would segfault without this check
+						status: either none? file [  ; Would segfault without this check
+							error-read  ; TODO: report real file error
+						][
 							session/file: file
 							set handle set-read-data  as variant! file
-						][
-							error-read  ; TODO: report real file error
 						]
 					]
 				]
@@ -453,10 +453,10 @@ curl: context [
 		if zero? status [
 			status: _do session/handle
 		]
-		either all [as-logic session/file  not close session/file] [
-			error-read  ; TODO: report real file error
-		][
+		either any [none? session/file  close session/file] [
 			status
+		][
+			error-read  ; TODO: report real file error
 		]
 	]
 
@@ -465,13 +465,13 @@ curl: context [
 
 	status: begin
 
-	either as-logic status [
+	either zero? status [
+		on-quit as-integer :end
+	][
 		print-line [
 			"Error setting up cURL networking:" newline
 			form-error status
 		]
-	][
-		on-quit as-integer :end
 	]
 
 ]
@@ -485,73 +485,70 @@ with curl [
 	read-url: function ["Read text file from network."
 		url			[c-string!]
 		return:		[c-string!]
-		/local session text size
+		/local
+			text	[binary!]
+			session size
 	][
-		either as-logic url [
-			; Size of initial data buffer. It will be resized when necessary.
-			size: 10'000
+		text: null
 
+		if as-logic url [
 			session: make-session
 
-			either all [
-				as-logic session
-				zero? set session/handle set-follow-location?  as variant! yes
-			][
-				text: allocate size
+			if as-logic session [
+				if zero? set session/handle set-follow-location?  as variant! yes [
+					; Size of initial data buffer. It will be resized when needed.
+					size: 10'000
+					text: allocate size
 
-				if as-logic text [
-					either any [
-						as-logic get session text size
-						as-logic do session url
-					][
-						free text
-						text: null
-					][
-						; Make it a string by appending a null byte
-
-						size: session/index + 1
-						text: resize session/data size
-
-						either as-logic text [
-							text/size: null-byte
+					if as-logic text [
+						either any [
+							as-logic get session text size
+							as-logic do session url
 						][
-							free session/data
+							free text
+							text: null
+						][
+							; Make it a string by appending a null byte
+
+							size: session/index + 1
+							text: resize session/data size
+
+							either none? text [
+								free session/data
+							][
+								text/size: null-byte
+							]
 						]
 					]
 				]
 				end-session session
-
-				as-c-string text
-			][
-				null
 			]
-		][
-			null
 		]
+		as-c-string text
 	]
 
 	write-url: function ["Write text to a network file."
 		url			[c-string!]
 		text		[c-string!]
 		return:		[logic!]
-		/local session fail?
+		/local session ok?
 	][
-		either all [as-logic url  as-logic text] [
+		either any [none? url  none? text] [
+			no
+		][
 			session: make-session
 
-			either as-logic session [
+			either none? session [
 				no
 			][
-				fail?: any [
-					as-logic put session  as-handle text  length? text
-					as-logic do session url
+				ok?: all [
+					zero? put session  as-handle text  length? text
+					zero? do session url
 				]
 				end-session session
 
-				not fail?
+				ok?
 			]
-		][
-			no
 		]
 	]
 

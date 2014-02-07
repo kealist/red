@@ -13,6 +13,8 @@ Red [
 		%common.red
 		%C-library/ANSI.red
 		%input-output.red
+		%TNetStrings/TNetStrings.red
+		%JSON/JSON.red
 	}
 	Tabs:		4
 ]
@@ -23,6 +25,8 @@ Red [
 #include %../../common/common.red
 #include %../../C-library/ANSI.red
 #include %../../common/input-output.red
+#include %../../TNetStrings/TNetStrings.red
+#include %../../JSON/JSON.red
 ;#include %../../SQLite/SQLite.red
 ;#include %../../ZeroMQ-binding/ZeroMQ-binding.red
 

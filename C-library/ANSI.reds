@@ -920,25 +920,27 @@ print-string-line: function ["Print line to standard output."
 ][
 	0 <= _print-string-line line
 ]
-input: function ["Read a line from standard input."
+input: function ["Return a line read from standard input."
 	return:			[c-string!]  "WARNING: no size check!"
 	/local			line
 ][
-	line: make-c-string 1001
+	line: make-c-string 100'001
 
 	if as-logic line [
-		if none? input-line line [  ; FIXME: no size check!
+		either none? input-line line [  ; FIXME: no size check!
 			free-any line
 			return null
+		][
+			line: as-c-string resize as-binary line  (length? line) + 1
 		]
 	]
 	line
 ]
-ask: function ["Prompt for input."
-	prompt			[c-string!]
+ask: function ["Prompt for input, then return a line read from standard input."
+	question		[c-string!]
 	return:			[c-string!]
 ][
-	print prompt
+	print question
 	input
 ]
 

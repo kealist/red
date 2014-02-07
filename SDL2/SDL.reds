@@ -28,6 +28,9 @@ Red/System [
 		SDL 1.2
 		%common/common.reds
 	}
+	Notes: {
+		SDL 1.3 not tested yet.
+	}
 	Tabs:		4
 ]
 

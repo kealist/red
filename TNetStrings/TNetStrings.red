@@ -1,7 +1,7 @@
 Red [
 	Title:		"Tagged NetStrings"
 	Author:		"Kaj de Vos"
-	Rights:		"Copyright (c) 2013 Kaj de Vos. All rights reserved."
+	Rights:		"Copyright (c) 2013,2014 Kaj de Vos. All rights reserved."
 	License: {
 		Redistribution and use in source and binary forms, with or without modification,
 		are permitted provided that the following conditions are met:
@@ -45,7 +45,7 @@ Red [
 #include %../common/common.red
 
 
-load-TNetString: func [				"Convert value(s) from (Tagged) NetStrings format."
+load-TNetString: func [				"Return value(s) converted from (Tagged) NetStrings format."
 	value			[string! file!]	"TNetStrings value(s)"
 	/objects						"Convert dictionaries to Red objects."
 	/keys							"Convert dictionary keys to Red value."
@@ -68,13 +68,11 @@ load-TNetString: func [				"Convert value(s) from (Tagged) NetStrings format."
 		ahead [size skip #","]
 		[if (value)
 			start: size skip stop:
-			(value: load/into append/part
+			keep (load/into append/part
 				clear _string  start  offset? start stop
 				clear _item
 			)
-			keep (value)
-		| if (zero? size)
-			keep (make string! 0)  ; FIXME: #603
+		| if (zero? size) keep (make string! 0)  ; FIXME: #603
 		| keep size skip
 		]
 		skip
@@ -97,15 +95,14 @@ load-TNetString: func [				"Convert value(s) from (Tagged) NetStrings format."
 			; FIXME: check end positions
 			| ahead [size skip #"^^"]											; TODO: float conversion
 				start: opt #"-"  any digit  opt [#"." any digit] stop: #"^^"
-				(value: append/part make file! 0
+				keep (append/part make file! 0
 					start  offset? start stop
 				)
-				keep (value)
-			| ahead [size skip #"]"] collect [any element] #"]"					; list
-			| ahead [size skip #"}"]											; dictionary
+			| ahead [size skip #"]"] collect [any element] #"]"					; List
+			| ahead [size skip #"}"]											; Dictionary
 				[if (objects) then [
 					collect set value [any [
-						header  ahead [size skip #","]							; key
+						header  ahead [size skip #","]							; Key
 						start: size skip stop: skip
 
 						if (set-word? value: load/into append append/part
@@ -119,7 +116,7 @@ load-TNetString: func [				"Convert value(s) from (Tagged) NetStrings format."
 					keep (context value)
 				]|
 					collect [any [
-						header  (value: keys) binary							; key
+						header  (value: keys) binary							; Key
 						element
 					]]
 				]
@@ -143,7 +140,7 @@ load-TNetString: func [				"Convert value(s) from (Tagged) NetStrings format."
 	]
 ]
 
-to-TNetString: function [			"Convert value to (Tagged) NetString."
+to-TNetString: function [			"Return value converted to (Tagged) NetString."
 	value							"Type is lost for some datatypes."
 	/map							"Convert even sized any-block! to a TNetStrings dictionary."
 	/deep							"Convert nested any-block! to TNetStrings dictionaries."
@@ -170,13 +167,14 @@ to-TNetString: function [			"Convert value to (Tagged) NetString."
 				length? append insert out  #":" value
 				#"!"
 		]
+		; FIXME: only Latin-1 yields proper size
 		char! [append append append out  "1:" value #","]
 		object! [
 			append out #":"
 
-			foreach name words-of value [
+			foreach name  words-of value [
 				append insert  tail out
-					length? append insert  tail out  #":" name
+					length? append  tail append out #":"  name
 					#","
 
 				unless either deep [
@@ -207,7 +205,7 @@ to-TNetString: function [			"Convert value to (Tagged) NetString."
 			find [none! unset!] type
 				append out "0:~"
 			any-block? value
-				either all [map  even? length? value] [
+				either all [map  even? length? value] [  ; Dictionary
 					append out #":"
 
 					foreach [name value] value [
@@ -218,7 +216,7 @@ to-TNetString: function [			"Convert value to (Tagged) NetString."
 							append append append append out  size #":" name #","
 						][
 							append insert  tail out
-								length? append insert  tail out  #":" name
+								length? append  tail append out #":"  name
 								#","
 						]
 						unless either deep [
@@ -233,7 +231,7 @@ to-TNetString: function [			"Convert value to (Tagged) NetString."
 					if 999'999'999 < size: (length? out) - 1 [return none]
 
 					append insert out  size #"}"
-				][
+				][	; List
 					foreach value value [
 						unless either deep [
 							to-TNetString/map/deep/into value  tail out
@@ -252,9 +250,36 @@ to-TNetString: function [			"Convert value to (Tagged) NetString."
 						append insert out  size #"]"
 					]
 				]
+			all [bitset? value  not find/match append out value  "make bitset! [not "] [  ; TODO: #622
+				clear out
+
+				either 0100h >= size: length? value [  ; Bytes
+					repeat item size [
+						if value/(item - 1) [
+							append append append out  "1:"  make char! item - 1  #","
+						]
+					]
+				][	; Integers
+					repeat item size [
+						if value/(item - 1) [
+							append insert tail out
+								length? append insert  tail out  #":"  item - 1
+								#"#"
+						]
+					]
+				]
+				unless only [
+					; FIXME: only Latin-1 yields proper size
+					if 999'999'999 < size: length? out [return none]
+
+					; TODO: insert in one go
+					insert out #":"
+					append insert out  size #"]"
+				]
+			]
 			yes [
 				; FIXME: only Latin-1 yields proper size
-				if 999'999'999 < size: length? append insert out  #":" value [
+				if 999'999'999 < size: length? append insert  clear out  #":" value [
 					return none
 				]
 				append insert out  size #","

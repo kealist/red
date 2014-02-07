@@ -1,7 +1,7 @@
 Red/System [
 	Title:		"Skeletal Abstracted Machine for CPU Emulator"
 	Author:		"Kaj de Vos"
-	Rights:		"Copyright (c) 1995,1996,2012,2013 Kaj de Vos. All rights reserved."
+	Rights:		"Copyright (c) 1995,1996,2012-2014 Kaj de Vos. All rights reserved."
 	License: {
 		Redistribution and use in source and binary forms, with or without modification,
 		are permitted provided that the following conditions are met:
@@ -48,14 +48,14 @@ memory: context [
 
 	read-map: as map! allocate 20h * size? map!
 
-	unless as-logic read-map [
+	if null? read-map [
 		print-line "Failed to allocate read memory map!"
 		quit 1
 	]
 
 	write-map: as map! allocate 20h * size? map!
 
-	unless as-logic write-map [
+	if null? write-map [
 		print-line "Failed to allocate write memory map!"
 		quit 2
 	]
@@ -65,7 +65,7 @@ memory: context [
 
 	RAM: allocate 00010000h
 
-	unless as-logic RAM [
+	if null? RAM [
 		print-line "Failed to allocate RAM memory!"
 		quit 10
 	]
@@ -88,7 +88,7 @@ memory: context [
 
 	dummy: allocate 0800h
 
-	unless as-logic dummy [
+	if null? dummy [
 		print-line "Failed to allocate dummy memory block!"
 		quit 11
 	]
@@ -100,10 +100,13 @@ memory: context [
 	size: 0
 	argument: get-argument 1
 
-	either as-logic argument [
+	either null? argument [
+		argument: get-argument 0
+		print-wide ["Usage:" argument "<ROM file>" newline]
+	][
 		ROM: read-file-binary argument :size
 
-		unless as-logic ROM [
+		if null? ROM [
 			print-line "Error reading ROM file!"
 			quit 20
 		]
@@ -131,9 +134,6 @@ memory: context [
 
 			segment = ROM
 		]
-	][
-		argument: get-argument 0
-		print-wide ["Usage:" argument "<ROM file>" newline]
 	]
 	end-argument argument
 

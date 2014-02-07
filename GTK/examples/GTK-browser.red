@@ -13,6 +13,8 @@ Red [
 
 		%common.red
 		%C-library/ANSI.red
+		%TNetStrings/TNetStrings.red
+		%JSON/JSON.red
 	}
 	Notes: {
 		Of course, this simple example is totally unsafe,
@@ -27,6 +29,8 @@ Red [
 ; Extras
 #include %../../common/common.red
 #include %../../C-library/ANSI.red
+#include %../../TNetStrings/TNetStrings.red
+#include %../../JSON/JSON.red
 ;#include %../../SQLite/SQLite.red
 ;#include %../../ZeroMQ-binding/ZeroMQ-binding.red
 

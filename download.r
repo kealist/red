@@ -40,6 +40,7 @@ foreach target [
 	%OSM-GPS-Map
 	%GTK-Champlain
 	%TNetStrings
+	%JSON
 	%6502
 ][
 	print ["Target" target]
