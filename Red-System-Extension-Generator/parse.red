@@ -26,8 +26,8 @@ array: [{[} any-spaces any chars any-spaces {]}]
 ;removes c-comments
 decomment: func [str [string!] /local f c com remove-comments] [
 	com: [
-		"/*" skip thru "*/" |
-		"//" skip thru newline
+		"/*" thru "*/" |
+		"//" thru newline
 	]
 	f: copy ""
 	remove-comments: [ 
@@ -44,9 +44,9 @@ decomment: func [str [string!] /local f c com remove-comments] [
 ; removes ifdefs
 deifdef: func [str [string!] /local f c remove-ifdef ifdef] [
 	ifdef: [
-		"#ifdef" skip thru newline |
-		"#ifndef" skip thru newline |
-		"#endif" skip thru newline
+		"#ifdef" thru newline |
+		"#ifndef" thru newline |
+		"#endif" thru newline
 	]
 	f: copy ""
 	remove-ifdef: [
@@ -66,7 +66,7 @@ p-type: [ ;parameter type
 	"int" (param-type: [integer!]) | 
 	"double" (param-type: [double!]) |
 	"float" (param-type: [float!]) |
-	"glp_prob" (param-type: [struct!]) |
+	"glp_prob" (param-type: [glp-prob!]) |
 	copy unknown-type some chars (param-type: compose [(unknown-type)])
 ]
 
@@ -77,7 +77,7 @@ r-type: [ ;return type
 	"int" (return-type: [integer!]) | 
 	"double" (return-type: [double!]) |
 	"float" (return-type: [float!]) |
-	"glp_prob" (return-type: [glp_prob!]) |
+	"glp_prob" (return-type: [glp-prob!]) |
 	copy unknown-r-type some chars (return-type: (compose [(unknown-r-type)]))
 ]
 

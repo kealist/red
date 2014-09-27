@@ -30,7 +30,7 @@ functn: [
 	any-spaces
 	";"
 	(
-		append fun load replace/all copy function-name "_" "-"
+		append fun replace/all copy function-name "_" "-"
 		append fun {: "} 
 		print function-name
 		append fun function-name 

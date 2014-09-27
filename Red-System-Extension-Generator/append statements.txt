@@ -1,0 +1,66 @@
+
+		print fun
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		FOR DEFINE
+
+
+			comment {
+	(	;print "define"
+		def: copy "#define "
+		struct: copy ""
+		struct-fields: copy ""
+	)
+	;; #define _GLP_PROB typedef struct { double _opaque_prob; } glp_prob;
+	"#define" 
+	spaces 
+	copy def-var some chars 
+	spaces 
+	"typedef" 
+	spaces
+	"struct"
+	any-spaces 
+	"{" 
+	any-spaces 
+	some [
+		copy type some chars 
+		spaces 
+		copy field some chars 
+		any-spaces ";" any-spaces 
+		(
+			append struct-fields "^/^-^-^-"
+			append struct-fields field
+			append struct-fields " ^["
+			append struct-fields type
+			append struct-fields "!^]"
+		)
+	]
+	any-spaces 
+	"}"
+	copy def-var some chars 
+	any-spaces 
+	";"
+	(
+		append struct def-var
+		append struct {: alias struct! ^[}
+		append struct struct-fields
+		append struct "^/^]^/"
+		append file struct
+	)
+	|}
