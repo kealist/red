@@ -59,6 +59,7 @@ devices: context [
 	]
 
 	;; Device structure:
+	
 	device!: alias struct! [
 		title 			[byte-ptr!]		;; title of device
 		version			[integer!]		;; version, revision, release
@@ -78,7 +79,7 @@ devices: context [
 		;; Linkages:
 		device 			[integer!]	;; device id (dev table)
 		next 			[request!]	;; linked list (pending or done lists)
-		port 			[byte-ptr!]	;; link back to REBOL port object
+		port 			[byte-ptr!]	;; link back to port object
 		
 		handle 			[byte-ptr!]
 		socket 			[integer!]
@@ -103,13 +104,13 @@ devices: context [
 	;; Red Device Table
 
 	list: declare struct! [
-		standard-io [device!]
-		file [device!]
-		event [device!]
-		net [device!]
-		dns [device!]
-		clipboard [device!]
-		serial [device!]
+		standard-io 	[device!]
+		file 			[device!]
+		event 			[device!]
+		net 			[device!]
+		dns 			[device!]
+		clipboard 		[device!]
+		serial 			[device!]
 	]
 
 		comment {

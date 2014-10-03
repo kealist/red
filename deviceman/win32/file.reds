@@ -6,6 +6,9 @@
 #define _O_U16TEXT 00020000h ;-- file mode is UTF16 no BOM (translated)
 #define _O_U8TEXT 00040000h ;-- file mode is UTF8 no BOM (translated)
 
+#define WIN_STD_INPUT_HANDLE -10
+#define WIN_STD_OUTPUT_HANDLE -11
+
 #define GENERIC_WRITE 40000000h
 #define GENERIC_READ 80000000h
 #define FILE_SHARE_READ 00000001h
