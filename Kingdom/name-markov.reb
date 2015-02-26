@@ -1,10 +1,18 @@
-Rebol []
+Rebol [
+	Title: "Markov Chain Name Generator"
+	Author: "Joshua Shireman"
+]
+
+languages: [
+	latin %names/latin.txt
+
+]
 
 whitespace: charset "^-^M^/ "
 alphanum: charset [#"0" - #"9" #"A" - #"Z" #"a" - #"z"]
 alpha: charset [#"A" - #"Z" #"a" - #"z"]
 
-level?: func [block] [(length? block) / 2]
+level?: func [block [block!]] [(length? block) / 2]
 
 load-name-data: func [
 	file [file!]
@@ -16,32 +24,34 @@ load-name-data: func [
 	split-names: split names whitespace
 ]
 
-generate-markov-rules: func [
+generate-markov-word-rules: func [
 	name-data [block!]
 	level [integer!]
+	/word
+	/sentence
 	/local
 	markov-ruleset
 	breakdown
 	chain
 ] [
 	markov-ruleset: []
-	chain: copy array/initial 2 * level ""
+	chain: copy array/initial 2 * level #
 	breakdown: [
 		some [
 			copy char alpha 
 			(
 				remove chain 
 				append chain char 
-				if not equal? "" (pick chain 1 + level) [append/only markov-ruleset reduce chain] 
+				if not none? (pick chain 1 + level) [append/only markov-ruleset reduce chain] 
 			)
 			|
 			end (
 				repeat i -1 + level [
 					remove chain 
-					append chain ""
+					append chain #
 					append/only markov-ruleset reduce chain 
 				]
-				chain: copy array/initial 2 * level ""
+				chain: copy array/initial 2 * level #
 			)
 		] 
 	]
@@ -59,6 +69,7 @@ chain-options: func [
 	initial?
 	subrule
 ][
+
 	subset: copy []
 	foreach rule ruleset [
 		match?: true
@@ -72,6 +83,24 @@ chain-options: func [
 	subset
 ]
 
-rules-sample: generate-markov-rules load-name-data %names/latin.txt 2
-print mold chain-options rules-sample ["" ""]
+rules-sample: generate-markov-word-rules load-name-data %names/latin.txt 2
 
+generate-chain: func [
+	rules [block!]
+	level [integer!]
+	/local
+	chain
+	options
+][
+	options: chain-options rules array/initial level #
+	chain: reverse pick options  (random length? options)	
+
+	until [
+		options: chain-options rules reverse copy/part chain level level
+		insert head chain copy/part reverse copy pick options random length? options level
+		(none? first chain) or ('none = first chain) 
+	]
+	append "" reverse trim chain
+]
+
+generate-chain rules-sample 2
