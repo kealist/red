@@ -51,25 +51,6 @@ generate-markov-rules: func [
 	return markov-ruleset
 ]
 
-find-initial-rules: func [
-	ruleset [block!]
-	/local
-	subset
-	initial?
-][
-	subset: copy []
-	initial?: func [
-		rule [block!]
-	] [
-		equal? "" pick rule (level? rule) 
-	]
-
-	foreach rule ruleset [
-		if initial? rule [append subset reduce rule print rule]
-	]
-	subset
-]
-
 chain-options: func [
 	ruleset [block!]
 	cond [block!]
@@ -85,8 +66,7 @@ chain-options: func [
 			if not ((pick cond i) = (pick rule i)) [match?: false]
 		]
 		subrule: copy/part rule (length? cond)
-		print [subrule " equal to " cond "?" subrule = cond]
-		if match? [append/only subset reduce rule print rule]
+		if match? [append/only subset reduce rule]
 		
 	]
 	subset
